@@ -37,8 +37,12 @@ footer p {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
- #img1,#img4, #img2,#img3 {
+ #img1,#img4, #img2 {
     width: 140px;
     height: 148px;
 }
 
+#img3 {
+    width: 140px;
+    height: 153px;
+}
