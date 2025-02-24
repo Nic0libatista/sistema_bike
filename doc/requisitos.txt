@@ -1,0 +1,17 @@
+requisitos
+
+  - Cadastro de Clientes:
+
+	Nome, telefone, e-mail, endereço;
+
+-- Cadastro de Bicicletas:
+
+	Modelo, marca, número de série, cor, Dados do cliente vinculado;
+
+-- Ordem de Serviço: 
+	Dados do cliente e da bicicleta, descrição do problema relatado pelo cliente, Status da ordem (Esperando peças, em andamento, finalizado), data e hora da abertura, peças necessarias para reparo;
+
+-- Controle de Peças e Estoque:
+
+	Cadastro de peças e controle do estoque;
+

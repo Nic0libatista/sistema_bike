@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+/* botões  */
+
+
+ body {
+  /*  background: url(../img/back.jpg);
+    background-size: cover;*/
+ 
+    
+    
+ }
+/* Botoes tela principal */
+.button img {
+    margin: 50px 15px 25px 15px;
+    padding: 5px;
+    border: 1px solid #e8e8e8;
+    cursor:pointer;
+}
+
+
+
+footer  {
+    background-color: grey;
+    color: white;
+    padding: 8px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 15px;
+    text-align: center;
+
+}
+
+footer p {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+ #img1,#img4, #img2,#img3 {
+    width: 140px;
+    height: 148px;
+}
+
