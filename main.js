@@ -79,8 +79,8 @@ function clientWindow() {
     const main = BrowserWindow.getFocusedWindow()
     if(main) {
         client = new BrowserWindow({
-            width: 420,
-            height: 320,
+            width: 850,
+            height: 700,
             //autoHideMenuBar: true,
             resizable: false,
             parent: main,
@@ -99,8 +99,8 @@ function bikeWindow() {
     const main = BrowserWindow.getFocusedWindow()
     if(main) {
         bike = new BrowserWindow({
-            width: 420,
-            height: 320,
+            width: 850,
+            height: 990,
             //autoHideMenuBar: true,
             resizable: false,
             parent: main,
@@ -140,8 +140,8 @@ function estoqueWindow() {
     const main = BrowserWindow.getFocusedWindow()
     if(main) {
         estoque = new BrowserWindow({
-            width: 420,
-            height: 320,
+            width: 850,
+            height: 700,
             //autoHideMenuBar: true,
             resizable: false,
             parent: main,

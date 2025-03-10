@@ -13,7 +13,175 @@
 </head>
 <body>
     <div class="container">
-        <h1> Bikes </h1>
+        
+        <form id="frmCliente" class="mt-2 row g-3">
+            <!-- Buscar cliente -->
+            <div class="col-md-6">
+                <input type="text" classe="form-control" id="searchClient" maxlength="30" spellcheck="false">
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary" id="btnRead" onclick="searchClient()">  Buscar </button>
+            </div>
+            <!-- Linha -->
+            <hr class="mt-4 border border-primary border -1">
+            
+
+            <!-- nome do cliente -->
+             <b> Informações do cliente </b>
+            <div class="col-md-6">
+             <label for="inputNameClient" class="form-label"> nome </label>
+
+             <input type="text" id="inputNameClient" spellcheck="false" required maxlength="30" class="form-control">
+            </div>
+
+
+            <!-- cpf do cliente -->
+            <div class="col-md-6">
+                <label for="inputCPFClient" class="form-label"> cpf </label>
+   
+                <input type="text" id="inputCPFClient" spellcheck="false" maxlength="15" class="form-control">
+               </div>
+               
+               
+               <hr class="mt-4 border border-primary border -1">
+
+               
+
+
+
+
+               <b> Cadastro da bicicleta </b>
+               <!-- marca -->
+
+               <div class="col-md-6">
+                <label for="inputMarcaClient" class="form-label"> Marca </label>
+   
+                <input type="text" id="inputMarcaClient" spellcheck="false" required maxlength="15" class="form-control">
+               </div>
+               
+
+               <!-- modelo -->
+              
+
+               <div class="col-md-6">
+                <label for="inputModelClient" class="form-label"> Modelo </label>
+   
+                <input type="text" id="inputModelClient" spellcheck="false" required maxlength="15" class="form-control">
+               </div>
+               
+               <!-- número de chassi (série) -->
+               <div class="col-md-6">
+                <label for="inputChassiClient" class="form-label"> Chassi </label>
+   
+                <input type="text" id="inputChassiClient" spellcheck="false" required maxlength="15" class="form-control">
+               </div>
+   
+               <!-- Cor da bike -->
+            <div class="col-md-3">
+                <label for="inputCorCliente" class="form-label"> Cor da bike </label>
+                <select class="form-select" id="inputCorCliente" name="cores" required>
+                    <option value="" disabled selected>Selecione a cor</option>
+                    <option value="preto-fosco">Preto Fosco</option>
+                    <option value="vermelho-cereja">Vermelho Cereja</option>
+                    <option value="azul-metalico">Azul Metálico</option>
+                    <option value="branco-perola">Branco Pérola</option>
+                    <option value="verde-musgo">Verde Musgo</option>
+                    <option value="amarelo-neon">Amarelo Neon</option>
+                    <option value="prata-espelhado">Prata Espelhado</option>
+                    <option value="roxo-royal">Roxo Royal</option>
+                    <option value="laranja-fogo">Laranja Fogo</option>
+                    <option value="rosa-choque">Rosa Choque</option>
+                    <option value="dourado-luxo">Dourado Luxo</option>
+                    <option value="cinza-grafite">Cinza Grafite</option>
+                </select>
+            </div>
+
+            <!-- tipo de bike -->
+            <div class="col-md-3">
+                <label for="inputTypeCliente" class="form-label"> tipo da bike </label>
+                <select class="form-select" id="inputTypeCliente" name="tipo de bike" required>
+                    <option value="" disabled selected>Selecione o tipo</option>
+                        <option value="mountain-bike">Mountain Bike (MTB)</option>
+                        <option value="speed-road">Speed/Road Bike</option>
+                        <option value="bmx">BMX</option>
+                        <option value="hibrida">Bicicleta Híbrida</option>
+                        <option value="urbana">Bicicleta Urbana</option>
+                        <option value="dobravel">Bicicleta Dobrável</option>
+                        <option value="eletrica">Bicicleta Elétrica</option>
+                        <option value="carga">Bicicleta de Carga</option>
+                        <option value="fixa">Bicicleta Fixa (Fixed Gear)</option>
+                        <option value="touring">Bicicleta de Touring</option>
+                        <option value="cruiser">Bicicleta Cruiser</option>
+                        <option value="gravel">Gravel Bike</option>
+                    </select>
+                </div>
+
+
+
+             <!-- observações -->
+             <div class="col-md-6">
+                <label for="inputOBSClient" class="form-label"> observações </label>
+   
+                <input type="text" id="inputOBSClient" spellcheck="false" class="form-control">
+               </div>
+
+
+
+               <div class="col-md-6">
+                <label for="inputPhotoClient" class="form-label"> fotos </label>
+               <input type="file" id="foto" accept="image/*" spellcheck="false" multiple class="form-control">
+               <div id="preview"></div>
+           
+               <script>
+                   const inputFoto = document.getElementById("foto");
+const preview = document.getElementById("preview");
+
+inputFoto.addEventListener("change", function() {
+    const arquivos = this.files;
+   // preview.innerHTML = ''; // Limpa a pré-visualização antes de adicionar novas imagens
+
+    // Loop para ler e mostrar todas as imagens selecionadas
+    for (let i = 0; i < arquivos.length; i++) {
+        const arquivo = arquivos[i];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.alt = "Pré-visualização";
+            img.style.maxWidth = '200px';
+            img.style.maxHeight = '200px';
+            img.style.objectFit = 'contain';
+            preview.appendChild(img); // Adiciona a imagem ao elemento de pré-visualização
+        }
+        
+        reader.readAsDataURL(arquivo);
+    }
+});
+                    // Função para resetar o formulário e limpar a pré-visualização
+                    function resetForm() {
+                        document.getElementById("frmCliente").reset();
+                        preview.innerHTML = '';  // Limpa a pré-visualização da imagem
+                        inputFoto.value = '';    // Limpa o campo de input de arquivo
+                    }
+
+               </script>
+            </div>
+
+
+
+
+
+
+               <!-- botoes -->
+                <div class="mt-5">
+                    <button type="submit" class="btn btn-success" id="btnCreate"> adicionar </button>
+                    <button type="submit" class="btn btn-warning" id="btnUpdate"> Editar </button>
+                    <button type="button" class="btn btn-danger" id="btnDelete"> Excluir </button>
+                    <button type="reset" class="btn btn-info" id="btnReset" onclick="resetForm()"> Resetar </button>
+                </div>
+               
+            </form>
     </div>
 
      <!-- Bootstrap -->

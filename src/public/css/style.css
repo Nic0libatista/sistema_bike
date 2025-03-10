@@ -44,3 +44,15 @@ footer p {
     width: 140px;
     height: 153px;
 }
+
+#inputOBSClient{
+    height: 120px;
+    
+}
+
+#preview img {
+  
+    max-width: 60px;
+    max-height: 60px;
+    object-fit: contain;
+}
