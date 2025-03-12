@@ -183,16 +183,23 @@ const template = [
         label: 'Cadastro',
         submenu: [
           {
-            label: 'Cliente'
+            label: 'Cliente',
+            click: () => clientWindow()
+
           },
           {
-            label: 'Bike'
+            label: 'Bike',
+            click: () => bikeWindow()
+
           },
           {
-            label: 'OS'
+            label: 'OS',
+            click: () => osWindow()
+
           },
           {
-            label: 'estoque'
+            label: 'estoque',
+            click: () => estoqueWindow()
           },
           {
             label: 'Sair',

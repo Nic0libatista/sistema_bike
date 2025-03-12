@@ -9,7 +9,7 @@ requisitos
 	Modelo, marca, número de chassi, cor, Dados do cliente vinculado;
 
 -- Ordem de Serviço: 
-	Dados do cliente e da bicicleta, descrição do problema relatado pelo cliente, Status da ordem (Esperando peças, em andamento, finalizado), data e hora da abertura, peças necessarias para reparo;
+	Dados do cliente e da bicicleta, descrição do problema relatado pelo cliente, Status da ordem (Esperando peças, em andamento, finalizado), data e hora da abertura, qual o serviço feito;
 
 -- Controle de Peças e Estoque:
 

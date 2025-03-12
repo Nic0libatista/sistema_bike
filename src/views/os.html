@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +10,176 @@
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="../public/css/style.css">
     <!-- impedir a execução de scripts externos ou não autorizados -->
-     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
 </head>
+
 <body>
     <div class="container">
-        <h1>OS</h1>
+        <form class="mt-2 row g-3">
+
+            <!-- OS -->
+            <div class="col-md-4">
+                <label class="form-label">Nº OS</label>
+                <input type="text" class="form-control" id="txtOs" disabled>
+            </div>
+
+            <!-- Data -->
+            <div class="col-md-3">
+                <label class="form-label">Data</label>
+                <input type="datetime-local" class="form-control" id="Dataa">
+                
+            </div>
+
+            <!-- Buscar cliente --> 
+            <form id="frmClient" class="mt-2 row g-3">
+                <!-- Buscar cliente -->
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="searchClient" maxlength="30" spellcheck="false">
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary" id="btnRead" onclick="searchClient()">Buscar</button>
+                </div>
+            <!-- Linha -->
+            <hr class="mt-4 border border-primary border -1">
+
+
+           <!-- nome do cliente -->
+           <div class="col-md-6">
+            <label for="inputNameClient" class="form-label"> nome </label>
+
+            <input type="text" id="inputNameClient" spellcheck="false" required maxlength="30" class="form-control">
+           </div>
+
+
+           <!-- cpf do cliente -->
+           <div class="col-md-3">
+               <label for="inputCPFClient" class="form-label"> cpf </label>
+  
+               <input type="text" id="inputCPFClient" spellcheck="false" maxlength="13" class="form-control">
+              </div>
+            
+         <!-- modelo -->
+                        
+        <div class="col-md-3">
+        <label for="inputModelClient" class="form-label"> Modelo da bike </label>
+        <input type="text" id="inputModelClient" spellcheck="false" required maxlength="15" class="form-control">
+        </div>
+
+
+            <!-- Linha -->
+            <hr class="mt-4 border border-secondary border -1">
+
+
+
+
+
+
+            <!-- Status -->
+            <div class="col-md-4">
+                <label class="form-label">Status da OS</label>
+                <select class="form-select" id="osStatus">
+                    <option value="">Selecione</option>
+                    <option>Aberta</option>
+                    <option>Em andamento</option>
+                    <option>Aguardando peças</option>
+                    <option>Finalizada</option>
+                    <option>Cancelada</option>
+                </select>
+            </div>
+
+
+
+            <div class="col-md-4">
+                <label class="form-label">Serviços</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="servico1" value="Troca de pneu">
+                    <label class="form-check-label" for="servico1">Troca de pneu</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="servico2" value="Pintura">
+                    <label class="form-check-label" for="servico2">Pintura</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="servico3" value="Troca de corrente">
+                    <label class="form-check-label" for="servico3">Troca de corrente</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="servico4" value="Limpeza">
+                    <label class="form-check-label" for="servico4">Limpeza</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="servico5" value="Alinhamento">
+                    <label class="form-check-label" for="servico5">Alinhamento</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="servico6" value="Ajuste de câmbio">
+                    <label class="form-check-label" for="servico6">Ajuste de câmbio</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="servico7" value="Ajuste de freio">
+                    <label class="form-check-label" for="servico7">Ajuste de freio</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="servico8" value="Manutenção preventiva">
+                    <label class="form-check-label" for="servico8">Manutenção preventiva</label>
+                </div>
+            </div>
+
+
+              <!-- observações -->
+              <div class="col-md-4">
+                <label for="inputOBSClient" class="form-label"> observações </label>
+   
+                <input type="text" id="inputOBSClient" spellcheck="false" class="form-control">
+               </div>
+
+
+      
+
+            <!--
+            <div class="mb-3">
+                <label class="form-label">Equipamento</label>
+                <input type="text" class="form-control" id="txtOsEquip">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Defeito</label>
+                <input type="text" class="form-control" id="txtOsDef">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Serviço</label>
+                <input type="text" class="form-control" id="txtOsServ">
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Técnico</label>
+                    <input type="text" class="form-control" id="txtOsTec">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Valor Total</label>
+                    <input type="text" class="form-control" id="txtOsValor" value="0">
+                </div>
+            </div>
+        -->
+            <div class="d-flex justify-content-center gap-1">
+                <button type="button" class="btn btn-success">Gerar OS</button>
+                <button type="button" class="btn btn-primary">Buscar OS</button>
+                <button type="button" class="btn btn-warning">Editar OS</button>
+                <button type="button" class="btn btn-danger">Excluir OS</button>
+                <button type="button" class="btn btn-secondary">Imprimir OS</button>
+                <button type="reset" class="btn btn-info" id="btnReset" onclick="resetForm()"> Resetar </button>
+        </div>
+        </form>
     </div>
 
-     <!-- Bootstrap -->
-     <script src="../public/js/bootstrap.min.js"></script>
-     <!-- Scripts -->
-  <!--  <script src="../public/js/script.js"></script> --> 
+
+
+    
+
+
+    <!-- Bootstrap -->
+    <script src="../public/js/bootstrap.min.js"></script>
+
+       <script src="../public/js/script.js"></script>
 </body>
+
 </html>

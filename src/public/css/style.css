@@ -3,11 +3,13 @@
 /* botões  */
 
 
- body {
-  /*  background: url(../img/back.jpg);
-    background-size: cover;*/
+ /*body {
+    background: url(../img/back.jpg);
+    background-size: cover;
    
  }
+ */
+
 /* Botoes tela principal */
 .button img {
     margin: 50px 15px 25px 15px;
@@ -52,7 +54,7 @@ footer p {
 
 #preview img {
   
-    max-width: 60px;
-    max-height: 60px;
+    max-width: 30px;
+    max-height: 30px;
     object-fit: contain;
 }

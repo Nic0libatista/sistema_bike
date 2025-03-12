@@ -16,12 +16,14 @@
         
         <form id="frmCliente" class="mt-2 row g-3">
             <!-- Buscar cliente -->
-            <div class="col-md-6">
-                <input type="text" classe="form-control" id="searchClient" maxlength="30" spellcheck="false">
-            </div>
-            <div class="col-md-4">
-                <button type="button" class="btn btn-primary" id="btnRead" onclick="searchClient()">  Buscar </button>
-            </div>
+            <form id="frmClient" class="mt-2 row g-3">
+                <!-- Buscar cliente -->
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="searchClient" maxlength="30" spellcheck="false">
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary" id="btnRead" onclick="searchClient()">Buscar</button>
+                </div>
             <!-- Linha -->
             <hr class="mt-4 border border-primary border -1">
             
@@ -149,8 +151,9 @@ inputFoto.addEventListener("change", function() {
             const img = document.createElement("img");
             img.src = e.target.result;
             img.alt = "Pré-visualização";
-            img.style.maxWidth = '200px';
-            img.style.maxHeight = '200px';
+            img.style.maxWidth = '50px';
+            img.style.maxHeight = '50px';
+            img.style.padding = '10px';
             img.style.objectFit = 'contain';
             preview.appendChild(img); // Adiciona a imagem ao elemento de pré-visualização
         }
