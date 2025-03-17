@@ -11,7 +11,5 @@ requisitos
 -- Ordem de Serviço: 
 	Dados do cliente e da bicicleta, descrição do problema relatado pelo cliente, Status da ordem (Esperando peças, em andamento, finalizado), data e hora da abertura, qual o serviço feito;
 
--- Controle de Peças e Estoque:
 
-	Cadastro de peças e controle do estoque;
 
