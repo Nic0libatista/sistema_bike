@@ -1,17 +1,16 @@
 tela principal
 -icones distorcidos 
-- formatação da data para pt-br
+--- formatação da data para pt-br
 
 tela de Clientes
-- cidade/ estado 
+--- cidade/ estado 
 
 
-- adicionar "outros" na bicicleta
-tela os
-- tirar o formato da data
-- criar um campo de busca melhor para a bike 
+
+--- tirar o formato da data
+--- criar um campo de busca melhor para a bike 
 - relato do cliente/ o tecnico
-- serviços - adicionar opção "outros"
+--- serviços - adicionar opção "outros"
 - peças
-- nome do mecanico 
-- valor do serviço
+--- nome do mecanico 
+--- valor do serviço
