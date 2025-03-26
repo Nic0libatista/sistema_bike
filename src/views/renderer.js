@@ -22,3 +22,15 @@ function estoque(){
 function bike(){
     api.bikeWindow()
 }
+
+
+
+// troca de icone do banco de dados
+api.dbstatus((Event,message) => {
+    console.log(message)
+    if (message === "conectado") {
+        document.getElementById('statusdb').src = "../public/img/dbon.png"
+    } else {
+        document.getElementById('statusdb').src = "../public/img/dboff.png"
+    }
+})

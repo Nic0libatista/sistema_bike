@@ -5,6 +5,15 @@ const { app, BrowserWindow, nativeTheme, Menu, ipcMain } = require('electron')
 //linha relacionada ao preload.js
 const path = require('node:path')
 
+// importação dos modulo de conectar e desconectar (modulo de conexão)
+const {conectar, desconectar} = require('./database.js')
+
+// importação do schema clientes da camada model
+const clientModel = require ('./src/models/cliente.js')
+
+//Importação do schema bikes da camada model
+const bikeModel = require ('./src/models/bike.js')
+
 // Janela principal
 let win
 const createWindow = () => {
@@ -84,7 +93,11 @@ function clientWindow() {
             //autoHideMenuBar: true,
             resizable: false,
             parent: main,
-            modal: true
+            modal: true,
+             // ativar preload.js
+             webPreferences: {
+            preload: path.join(__dirname, 'preload.js')
+        }
         })
     }
     client.loadFile('./src/views/cliente.html')  
@@ -104,7 +117,11 @@ function bikeWindow() {
             //autoHideMenuBar: true,
             resizable: false,
             parent: main,
-            modal: true
+            modal: true,
+             // ativar preload.js
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js')
+        }
         })
     }
     bike.loadFile('./src/views/bike.html')  
@@ -125,7 +142,11 @@ function osWindow() {
           //  autoHideMenuBar: true,
             resizable: false,
             parent: main,
-            modal: true
+            modal: true,
+             // ativar preload.js
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js')
+        }
         })
     }
     os.loadFile('./src/views/os.html')   
@@ -176,6 +197,31 @@ app.on('window-all-closed', () => {
 
 //reduzir logs não críticos
 app.commandLine.appendSwitch('log-level', '3')
+
+
+// iniciar a conexão com banco de dados (pedido direto do preload)
+ipcMain.on('db-connect',async (Event) => {
+    let conectado = await conectar()
+// se coenctado for igual a true 
+    if (conectado) {
+    // enviar uma mensagem para o renderizador trocar o icone
+    // criar delay de 5s para sincronizar a nuvem
+    setTimeout(()=> { 
+    Event.reply('db-status', "conectado")
+    }, 500); //500ms
+    
+}
+})
+
+// !!! desconectar quando a aplicação for encerrada
+app.on('before-quit', () => {
+    desconectar() 
+})
+
+
+
+
+
 
 // template do menu
 const template = [
@@ -268,3 +314,60 @@ const template = [
         ]
     }
 ]
+
+//clientes -- crud create
+ipcMain.on('new-client', async (event,client) => {
+    // !!! teste de recebimento dos dados do cliente
+    console.log(client)
+
+    try {
+
+        //criar nova estrutura de dados usando a class modelo. !!! os atributos precisam ser identicos ao modelo de dados cliente.js
+        // e os valores são definidos pelo conteúdo de objeto cliente
+        const newClient = new clientModel({
+            nomeCliente: client.nameCli,
+            cpfCliente: client.cpfCli,
+            emailCliente: client.emailCli,
+            telefoneCliente: client.phoneCli,
+            cepCliente: client.cepCli,
+            logradouroCliente: client.adressCli,
+            numeroCliente: client.numberCli,
+            complementoCliente: client.complementCli,
+            bairroCliente: client.neighborhoodCli,
+            cidadeCliente: client.cityCli,
+            ufCliente: client.ufCli
+        });
+
+        //salvar os dados do cliente no banco de dados
+        await newClient.save()
+        } catch(error) {
+        console.log(error)
+    }
+})
+
+
+//clientesBike -- crud create
+ipcMain.on('new-clientBike', async (event,client) => {
+    // !!! teste de recebimento dos dados do cliente
+    console.log(clientBike)
+
+    try {
+
+        //criar nova estrutura de dados usando a class modelo. !!! os atributos precisam ser identicos ao modelo de dados cliente.js
+        // e os valores são definidos pelo conteúdo de objeto cliente
+        const newClientBike = new clientBikeModel({
+            marcaCliente: clientBike.marcaCli,
+            modeloCliente: client.modeloCli,
+            chassiCliente: client.chassiCli,
+            corCliente: client. corCli,
+            cepCliente: client.tipoCli,
+            obsCliente: client.obsCli,
+            fotoCliente: client.fotoCli
+        })
+
+        //salvar os dados do cliente no banco de dados
+        await newClient.save()
+        } catch(error) {
+        console.log(error)
+    }
+})
