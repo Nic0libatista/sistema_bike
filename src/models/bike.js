@@ -29,18 +29,18 @@ const bikeSchema = new Schema({
         type:String
     },
 
-    fotoCliente: {
+    /* fotoCliente: {
         type:Image
     }
 
-/*dataCadastro: {
+    dataCadastro: {
         type:Date,
         default: Date.now
-    }
-        */
+    } */
+       
 }, {versionKey:false}) // n versionar os dados armazenados
 
 //exportar para o main o modelo de dados
 // !!! clientes será o nome da coleção 
 
-module.exports = model('clientesBike', clienteBikeSchema)
+module.exports = model('clientesBike', bikeSchema)

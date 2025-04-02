@@ -15,7 +15,9 @@ contextBridge.exposeInMainWorld('api',{
     estoqueWindow: () => ipcRenderer.send('estoque-Window'),
     bikeWindow: () => ipcRenderer.send('bike-Window'),
     dbstatus:(message) => ipcRenderer.on('db-status', message),
-    newClient:(client)=>ipcRenderer.send('new-client',client)
+    newClient:(client)=>ipcRenderer.send('new-client',client),
+    newClientBike :(client)=>ipcRenderer.send('new-clientBike',client)
+       
 })
 
 

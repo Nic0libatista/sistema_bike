@@ -11,8 +11,8 @@ const {conectar, desconectar} = require('./database.js')
 // importação do schema clientes da camada model
 const clientModel = require ('./src/models/cliente.js')
 
+const clientBikeModel = require ('./src/models/bike.js')
 //Importação do schema bikes da camada model
-const bikeModel = require ('./src/models/bike.js')
 
 // Janela principal
 let win
@@ -346,6 +346,9 @@ ipcMain.on('new-client', async (event,client) => {
 })
 
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //clientesBike -- crud create
 ipcMain.on('new-clientBike', async (event,client) => {
     // !!! teste de recebimento dos dados do cliente
@@ -356,17 +359,16 @@ ipcMain.on('new-clientBike', async (event,client) => {
         //criar nova estrutura de dados usando a class modelo. !!! os atributos precisam ser identicos ao modelo de dados cliente.js
         // e os valores são definidos pelo conteúdo de objeto cliente
         const newClientBike = new clientBikeModel({
-            marcaCliente: clientBike.marcaCli,
+            marcaCliente: client.marcaCli,
             modeloCliente: client.modeloCli,
             chassiCliente: client.chassiCli,
             corCliente: client. corCli,
-            cepCliente: client.tipoCli,
             obsCliente: client.obsCli,
             fotoCliente: client.fotoCli
         })
 
         //salvar os dados do cliente no banco de dados
-        await newClient.save()
+        await newClientBike.save()
         } catch(error) {
         console.log(error)
     }

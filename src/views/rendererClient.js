@@ -82,39 +82,3 @@ frmClient.addEventListener('submit', async (event) => {
     api.newClient(client);
 });
 
-
-///////////////////// CADASTRO BIKE 
-
-let frmClientBike = document.getElementById('frmClient');
-let marcaCliente = document.getElementById('inputMarcaClient')
-let modeloCliente = document.getElementById('inputModelClient')
-let = document.getElementById('inputModelClient')
-let chassiCliente = document.getElementById('inputChassiClient')
-let corCliente = document.getElementById('inputCorCliente')
-let tipoCliente = document.getElementById('inputTypeCliente')
-let obsCliente = document.getElementById('inputOBSClient')
-let fotoCliente = document.getElementById('inputPhotoClient')
-
-
-// CRUD CREATE/UPDATE
-frmClientBike.addEventListener('submit', async (event) => {
-    // Evitar comportamento padrão do submit
-    event.preventDefault();
-
-    // Teste para verificar recebimento dos dados
-    console.log(marcaCliente.value, modeloCliente.value, chassiCliente.value, corCliente.value, tipoCliente.value, obsCliente.value, fotoCliente.value);
-
-      // Criar objeto para armazenar os dados do cliente
-      const clientBike = {
-        marcaCli: marcaCliente.value,
-        modeloCli: modeloCliente.value,
-        chassiCli: chassiCliente.value,
-        corCli: corCliente.value,
-        tipoCli: tipoCliente.value,
-        obsCli: obsCliente.value,
-        fotoCli: fotoCliente.value
-    };
-
-    // Enviar para a API
-    api.newClient(clientBike);
-});
