@@ -15,7 +15,7 @@
 
 <body>
     <div class="container">
-        <form class="mt-2 row g-3">
+        <form id="frmOs" class="mt-2 row g-3">
 
             <!-- OS -->
             <div class="col-md-4">
@@ -27,58 +27,38 @@
             <div class="col-md-3">
                 <label class="form-label">Data</label>
                 <input type="text" class="form-control" id="Dataa" disabled>
-                
             </div>
 
             <!-- nome do funcionario -->
-           <div class="col-md-3">
-            <label for="inputCPFClient" class="form-label"> nome do funcionario </label>
+            <div class="col-md-3">
+                <label for="inputNomeFuncionario" class="form-label">Nome do Funcionário</label>
+                <input type="text" id="inputNomeFuncionario" spellcheck="false" maxlength="13" class="form-control">
+            </div>
 
-            <input type="text" id="inputCPFClient" spellcheck="false" maxlength="13" class="form-control">
-           </div>
+            <hr class="mt-4 border border-primary border-1 w-100">
 
-           
-            <!-- Linha -->
-            <hr class="mt-4 border border-primary border -1">
-
-
-           <!-- Buscar cliente --> 
-           <form id="frmClient" class="mt-2 row g-3">
-
-            <!-- Buscar cliente -->
+            <!-- Buscar cliente e modelo -->
             <div class="col-md-6">
-                <input type="text" class="form-control" id="searchClient" maxlength="30" spellcheck="false" placeholder="buscar cliente">
+                <input type="text" class="form-control" id="inputSearchClient" maxlength="30" spellcheck="false" placeholder="Buscar cliente">
             </div>
             <div class="col-md-4">
-                <button type="button" class="btn btn-primary" id="btnRead" onclick="searchClient()">Buscar</button>
+                <button type="button" class="btn btn-primary" onclick="searchClient()">Buscar</button>
             </div>
 
-        
-            <!-- Buscar modelo -->
             <div class="col-md-3">
-                <input type="text" class="form-control" id="searchModel" maxlength="10" spellcheck="false" placeholder="modelo da bicicleta">
+                <input type="text" class="form-control" id="searchModel" maxlength="10" spellcheck="false" placeholder="Modelo da bicicleta">
             </div>
             <div class="col-md-1">
-                <button type="button" class="btn btn-primary" id="btnRead" onclick="searchModel()">Buscar</button>
+                <button type="button" class="btn btn-primary" onclick="searchModel()">Buscar</button>
             </div>
-           
-           </form>
 
-            <!-- Linha -->
-            <hr class="mt-4 border border-secondary border -1">
+            <hr class="mt-4 border border-secondary border-1 w-100">
 
-
-            <form id="frmClient" class="mt-2 row g-3">
-
-
-        
+            <!-- Mecanico -->
             <div class="col-md-4">
-                <label for="inputNamefuncionario" class="form-label"> nome do mecanico responsável </label>
-   
-                <input type="text" id="inputNamefuncionario" spellcheck="false" required maxlength="15" class="form-control">
-               </div>
-
-
+                <label for="inputNameMecanico" class="form-label">Nome do Mecânico Responsável</label>
+                <input type="text" id="inputNameMecanico" spellcheck="false" required maxlength="15" class="form-control">
+            </div>
 
             <!-- Status -->
             <div class="col-md-4">
@@ -93,8 +73,7 @@
                 </select>
             </div>
 
-
-
+            <!-- Serviços -->
             <div class="col-md-4">
                 <label class="form-label">Serviços</label>
                 <div class="form-check">
@@ -130,72 +109,32 @@
                     <label class="form-check-label" for="servico8">Manutenção preventiva - R$85,00</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="servico9" value="" >
-                    <label class="form-check-label" for="servico8">Outros - SEM VALOR DEFINIDO </label>
+                    <input class="form-check-input" type="checkbox" id="servico9" value="">
+                    <label class="form-check-label" for="servico9">Outros - SEM VALOR DEFINIDO</label>
                 </div>
+
                 <hr>
-                <div class="col-md-4">
-                    <label class="form-label">Valor Total</label>
-                    <input type="text" id="valorTotal" class="form-control" value="R$ 0,00" readonly>
-                </div>
-                
-
-        </div>
-
-
-
-
-             
-
-              
-                 <!-- nome do cliente -->
-               
-            <!--
-            <div class="mb-3">
-                <label class="form-label">Equipamento</label>
-                <input type="text" class="form-control" id="txtOsEquip">
+                <label class="form-label">Valor Total</label>
+                <input type="text" id="inputvalorTotal" class="form-control" value="R$ 0,00" readonly>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Defeito</label>
-                <input type="text" class="form-control" id="txtOsDef">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Serviço</label>
-                <input type="text" class="form-control" id="txtOsServ">
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">Técnico</label>
-                    <input type="text" class="form-control" id="txtOsTec">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Valor Total</label>
-                    <input type="text" class="form-control" id="txtOsValor" value="0">
-                </div>
-            </div>
-        -->
-            <div class="d-flex justify-content-center gap-1">
-                <button type="button" class="btn btn-success">Gerar OS</button>
+
+            <!-- Botões -->
+            <div class="d-flex justify-content-center gap-1 w-100 mt-4">
+                <button type="submit" class="btn btn-success">Gerar OS</button>
                 <button type="button" class="btn btn-primary">Buscar OS</button>
                 <button type="button" class="btn btn-warning">Editar OS</button>
                 <button type="button" class="btn btn-danger">Excluir OS</button>
                 <button type="button" class="btn btn-secondary">Imprimir OS</button>
-                <button type="reset" class="btn btn-info" id="btnReset" onclick="resetForm()"> Resetar </button>
-        </div>
+                <button type="reset" class="btn btn-info" onclick="resetForm()">Resetar</button>
+            </div>
+
         </form>
     </div>
 
-
-
-
-    
-
-
-    <!-- Bootstrap -->
+    <!-- Scripts -->
     <script src="../public/js/bootstrap.min.js"></script>
-
     <script src="../public/js/script.js"></script>
-    <script src="../views/rendererClient.js"> </script>
+    <script src="../views/rendereros.js"></script>
 
 </body>
 

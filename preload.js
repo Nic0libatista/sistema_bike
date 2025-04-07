@@ -16,7 +16,8 @@ contextBridge.exposeInMainWorld('api',{
     bikeWindow: () => ipcRenderer.send('bike-Window'),
     dbstatus:(message) => ipcRenderer.on('db-status', message),
     newClient:(client)=>ipcRenderer.send('new-client',client),
-    newClientBike :(client)=>ipcRenderer.send('new-clientBike',client)
+    newOs: (OS) => ipcRenderer.send("new-os", OS),
+    newClientBike :(bike)=>ipcRenderer.send('new-clientBike',bike)
        
 })
 

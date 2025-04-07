@@ -43,4 +43,4 @@ const bikeSchema = new Schema({
 //exportar para o main o modelo de dados
 // !!! clientes será o nome da coleção 
 
-module.exports = model('clientesBike', bikeSchema)
+module.exports = model('clientBike', bikeSchema)

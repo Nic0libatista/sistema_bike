@@ -1,45 +1,36 @@
+let frmOs = document.getElementById('frmOs');
+let nomeFuncionario = document.getElementById('inputNomeFuncionario');
+let osStatus = document.getElementById('osStatus');
+let valorTotal = document.getElementById('inputvalorTotal');
+let nameMecanico = document.getElementById('inputNameMecanico');
 
+// Função para capturar os serviços selecionados
+function getServicosSelecionados() {
+    let servicosSelecionados = [];
+    for (let i = 1; i <= 9; i++) {
+        let checkbox = document.getElementById(`servico${i}`);
+        if (checkbox && checkbox.checked) {
+            let texto = checkbox.nextElementSibling.innerText;
+            servicosSelecionados.push(texto);
+        }
+    }
+    return servicosSelecionados.join(', ');
+}
 
-//capturar o foco na busca pelo nome do cliente
-// a constante foco obtem o elemento html (input) identificada como searchClient
-const foco = document.getElementById('searchClient')
-
-
-
-// Capturar os dados dos inputs
-let frmClient = document.getElementById('frmClient');
-let nameClient = document.getElementById('inputNameClient');
-let cpfClient = document.getElementById('inputCPFClient');
-let marcaCliente = document.getElementById('inputMarcaClient');
-let modeloCliente = document.getElementById('inputModelClient');
-let chassiCliente = document.getElementById('inputChassiClient');
-let corCliente = document.getElementById('inputCorCliente');
-let tipoCliente = document.getElementById('inputTypeCliente');
-let obsCliente = document.getElementById('inputOBSClient');
-let fotoCliente = document.getElementById('inputPhotoClient');
-
-// Teste para verificar recebimento dos dados
-    console.log(marcaCliente.value, modeloCliente.value);
-
-
-    
-
-// CRUD CREATE/UPDATE
-frmClient.addEventListener('submit', async (event) => {
-    // Evitar comportamento padrão do submit
+frmOs.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-// Criar objeto para armazenar os dados do cliente
-const clientBike = {
-    marcaCli: marcaCliente.value,
-    modeloCli: modeloCliente.value,
-    chassiCli: chassiCliente.value,
-    corCli: corCliente.value,
-    tipoCli: tipoCliente.value,
-    obsCli: obsCliente.value,
-    fotoCli: fotoCliente.value
-};
+    let servicos = getServicosSelecionados();
 
-// Enviar para a API
-api.newClientBike(bike);
+    console.log(nomeFuncionario.value, osStatus.value, servicos, valorTotal.value, nameMecanico.value);
+
+    const OS = {
+        funcionarioos: nomeFuncionario.value,
+        statusos: osStatus.value,
+        serviçosos: servicos,
+        valoros: valorTotal.value,
+        mecanicoos: nameMecanico.value
+    };
+
+    api.newOs(OS);
 });

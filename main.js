@@ -12,7 +12,9 @@ const {conectar, desconectar} = require('./database.js')
 const clientModel = require ('./src/models/cliente.js')
 
 const clientBikeModel = require ('./src/models/bike.js')
-//Importação do schema bikes da camada model
+
+const OSModel = require('./src/models/os.js')
+
 
 // Janela principal
 let win
@@ -373,3 +375,30 @@ ipcMain.on('new-clientBike', async (event,client) => {
         console.log(error)
     }
 })
+
+////////////////////////////////////// fim bike - crud //////////////////
+
+/////////////////////////////// OS - CRUD CREATE
+ipcMain.on('new-os', async (event, OS) => {
+    // IMPORTANTE!! teste do passo dois
+    console.log(OS)
+    // Cadastrar a estrutura de dados do banco de dados Mongodb
+    //ATENÇÃO !! os atributos deve ser identicos ao modelo de dados clientes.js
+    //
+    try {
+        //cria uma nova estrutura de dados usando classe  modelo
+        const newOs = new OSModel({
+            funcionarioos: OS.funcionarioos,
+            statusos: OS.statusos,
+            serviçosos: OS.serviçosos,
+            valoros: OS.valoros,
+            mecanicoos: OS.mecanicoos
+        })
+         //salvar os dados Clientes no banco de dados
+         await newOs.save()
+    } catch (error) {
+        console.log(error)
+    } 
+})
+
+//== FIM - OS - CRUD CREATE

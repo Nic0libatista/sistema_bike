@@ -50,9 +50,9 @@
 
 
 
-
+            </form>
                <b> Cadastro da bicicleta </b>
-               
+               <form id="frmClientbike" class="mt-2 row g-3">
                <!-- marca -->
 
                <div class="col-md-6">
@@ -163,7 +163,7 @@ inputFoto.addEventListener("change", function() {
 });
                     // Função para resetar o formulário e limpar a pré-visualização
                     function resetForm() {
-                        document.getElementById("frmCliente").reset();
+                        document.getElementById("frmClientbike").reset();
                         preview.innerHTML = '';  // Limpa a pré-visualização da imagem
                         inputFoto.value = '';    // Limpa o campo de input de arquivo
                     }
@@ -189,6 +189,8 @@ inputFoto.addEventListener("change", function() {
 
      <!-- Bootstrap -->
      <script src="../public/js/bootstrap.min.js"></script>
+
+     <script src="../views/rendererbike.js"></script>
      <!-- Scripts -->
   <!--  <script src="../public/js/script.js"></script> --> 
 </body>

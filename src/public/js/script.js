@@ -48,4 +48,4 @@ function calcularTotal() {
         }
     });
     let totalFormatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    document.getElementById('valorTotal').value = totalFormatado;}
+    document.getElementById('inputvalorTotal').value = totalFormatado;}
