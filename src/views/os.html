@@ -38,21 +38,23 @@
             <hr class="mt-4 border border-primary border-1 w-100">
 
             <!-- Buscar cliente e modelo -->
-            <div class="col-md-6">
-                <input type="text" class="form-control" id="inputSearchClient" maxlength="30" spellcheck="false" placeholder="Buscar cliente">
-            </div>
-            <div class="col-md-4">
-                <button type="button" class="btn btn-primary" onclick="searchClient()">Buscar</button>
-            </div>
+           <!-- Linha com busca de cliente e modelo da bike lado a lado -->
+<div class="row">
+    <!-- Cliente -->
+    <div class="col-md-6 d-flex gap-2">
+        <input type="text" class="form-control" id="inputSearchClient" maxlength="30" spellcheck="false" placeholder="Buscar cliente">
+        <button type="button" class="btn btn-primary" onclick="searchClient()">Buscar</button>
+    </div>
 
-            <div class="col-md-3">
-                <input type="text" class="form-control" id="searchModel" maxlength="10" spellcheck="false" placeholder="Modelo da bicicleta">
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-primary" onclick="searchModel()">Buscar</button>
-            </div>
+    <!-- Modelo da bike -->
+    <div class="col-md-6 d-flex gap-2">
+        <input type="text" class="form-control" id="searchModel" maxlength="10" spellcheck="false" placeholder="Modelo da bicicleta">
+        <button type="button" class="btn btn-primary" onclick="searchModel()">Buscar</button>
+    </div>
+</div>
 
-            <hr class="mt-4 border border-secondary border-1 w-100">
+<hr>
+
 
             <!-- Mecanico -->
             <div class="col-md-4">
@@ -73,7 +75,74 @@
                 </select>
             </div>
 
-            <!-- Serviços -->
+        
+    <!-- Relatórios (esquerda) -->
+    <div class="col-md-8">
+        <div class="mb-3">
+            <label for="inputRelatorioCliente" class="form-label">Relatório do Cliente</label>
+            <input type="text" id="inputRelatorioCliente" class="form-control" placeholder="Relatório do cliente" maxlength="400">
+        </div>
+
+        <div class="mb-3">
+            <label for="inputRelatorioTecnico" class="form-label">Relatório Técnico</label>
+            <input type="text" id="inputRelatorioTecnico" class="form-control" placeholder="Relatório técnico" maxlength="400">
+        </div>
+    </div>
+
+    <!-- Serviços (direita) -->
+    <div class="col-md-4">
+        <label class="form-label">Serviços</label>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="servico1" value="100" onchange="calcularTotal()">
+            <label class="form-check-label" for="servico1">Troca de pneu - R$100,00</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="servico2" value="160" onchange="calcularTotal()">
+            <label class="form-check-label" for="servico2">Pintura - R$160</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="servico3" value="30" onchange="calcularTotal()">
+            <label class="form-check-label" for="servico3">Troca de corrente - R$30,00</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="servico4" value="110" onchange="calcularTotal()">
+            <label class="form-check-label" for="servico4">Limpeza - R$110,00</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="servico5" value="200" onchange="calcularTotal()">
+            <label class="form-check-label" for="servico5">Alinhamento - R$200,00</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="servico6" value="80" onchange="calcularTotal()">
+            <label class="form-check-label" for="servico6">Ajuste de câmbio - R$80,00</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="servico7" value="80" onchange="calcularTotal()">
+            <label class="form-check-label" for="servico7">Ajuste de freio - R$80,00</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="servico8" value="85" onchange="calcularTotal()">
+            <label class="form-check-label" for="servico8">Manutenção preventiva - R$85,00</label>
+        </div>
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="servico9" value="">
+            <label class="form-check-label" for="servico9">Outros - SEM VALOR DEFINIDO</label>
+        </div>
+
+<!--
+            <div class="col-md-4">
+                    <label for="inputEmailClient" class="form-label" > relatorio do cliente </label>
+       
+                    <input type="text" id="inputEmailClient" spellcheck="false" placeholder="relatorio do cliente" maxlength="400" class="form-control">
+                   </div>
+
+                   <div class="col-md-7">
+                    <label for="inputEmailClient" class="form-label"> relatorio técnico </label>
+       
+                    <input type="text" id="inputEmailClient" spellcheck="false" maxlength="400" placeholder="relatorio do técnico " class="form-control">
+                   </div>
+
+             Serviços 
             <div class="col-md-4">
                 <label class="form-label">Serviços</label>
                 <div class="form-check">
@@ -111,7 +180,8 @@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="servico9" value="">
                     <label class="form-check-label" for="servico9">Outros - SEM VALOR DEFINIDO</label>
-                </div>
+                </div> -->
+                
 
                 <hr>
                 <label class="form-label">Valor Total</label>

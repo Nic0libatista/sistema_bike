@@ -68,7 +68,7 @@ frmClient.addEventListener('submit', async (event) => {
         nameCli: nameClient.value,
         cpfCli: cpfClient.value,
         emailCli: emailClient.value,
-        phoneCli: phoneClient.value,
+        foneCli: phoneClient.value,
         cepCli: cepClient.value,
         addressCli: addressClient.value,
         numberCli: numberClient.value,

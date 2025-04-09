@@ -27,21 +27,21 @@ frmClientbike.addEventListener('submit', async (event) => {
 
     
 // Teste para verificar recebimento dos dados
-    console.log(marcaCliente.value, modeloCliente.value,chassiCliente.value , corCliente.value, tipoCliente.value, obsCliente.value);
+    console.log(marcaCliente.value, modeloCliente.value,chassiCliente.value ,  corCliente.value, tipoCliente.value, obsCliente.value);
 
 
 
 // Criar objeto para armazenar os dados do cliente
-const clientBike = {
+const bike = {
     marcaCli: marcaCliente.value,
     modeloCli: modeloCliente.value,
     chassiCli: chassiCliente.value,
     corCli: corCliente.value,
     tipoCli: tipoCliente.value,
     obsCli: obsCliente.value,
-    fotoCli: fotoCliente.value
+//fotoCli: fotoCliente.value
 };
 
 // Enviar para a API
-api.newClientBike(bike);
+api.newbike(bike);
 });

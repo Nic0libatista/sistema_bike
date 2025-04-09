@@ -5,42 +5,44 @@
 
 //importação dos recursos do framework mongoose
 const {model,Schema} =require('mongoose')
+const bike = require('./bike'); 
+
 
 // criação da estrutura da coleção clientes
 const bikeSchema = new Schema({
-    marcaCliente: {
+    marcaCli: {
         type: String
     },
-    modeloCliente: {
+    modeloCli: {
         type: String
     },
-    chassiCliente: {
+    chassiCli: {
         type:String
     },
-    corCliente: {
+    corCli: {
         type: String
     },
 
-    tipoCliente: {
+    tipoCli:  {
         type:String
     },
 
-    obsCliente: {
+    obsCli: {
         type:String
     },
 
-    /* fotoCliente: {
-        type:Image
-    }
+     fotoCli: {
+        type:String
+    },
 
     dataCadastro: {
         type:Date,
         default: Date.now
-    } */
+    } 
        
 }, {versionKey:false}) // n versionar os dados armazenados
 
 //exportar para o main o modelo de dados
 // !!! clientes será o nome da coleção 
 
-module.exports = model('clientBike', bikeSchema)
+module.exports = model('bike', bikeSchema)
