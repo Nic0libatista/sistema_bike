@@ -17,7 +17,10 @@ contextBridge.exposeInMainWorld('api',{
     dbstatus:(message) => ipcRenderer.on('db-status', message),
     newClient:(client)=>ipcRenderer.send('new-client',client),
     newOs: (OS) => ipcRenderer.send("new-os", OS),
-    newbike :(bike)=>ipcRenderer.send('new-bike',bike)
+    newbike :(bike)=>ipcRenderer.send('new-bike',bike),
+    resetForm: (args) => ipcRenderer.on('reset-form', args),
+    searchName:(name)=>ipcRenderer.send('search-name',name),
+    renderClient:(dataClient)=>ipcRenderer.on('render-client', dataClient)
        
 })
 

@@ -9,7 +9,7 @@ tela de Clientes
 
 --- tirar o formato da data
 --- criar um campo de busca melhor para a bike 
-- relato do cliente/ o tecnico
+-- relato do cliente/ o tecnico
 --- serviços - adicionar opção "outros"
 - peças
 --- nome do mecanico 

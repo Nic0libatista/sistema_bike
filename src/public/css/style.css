@@ -38,15 +38,13 @@ footer p {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
- #img1,#img4, #img2 {
+ #img1,#img2, #img3, #img4 {
     width: 140px;
     height: 148px;
 }
 
-#img3 {
-    width: 140px;
-    height: 153px;
-}
+
+
 
 #inputOBSClient{
     height: 80px;
