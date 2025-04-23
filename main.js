@@ -338,7 +338,7 @@ ipcMain.on('new-client', async (event,client) => {
             emailCliente: client.emailCli,
             foneCliente: client.foneCli,
             cepCliente: client.cepCli,
-            logradouroCliente: client.adressCli,
+            logradouroCliente: client.addressCli,
             numeroCliente: client.numberCli,
             complementoCliente: client.complementCli,
             bairroCliente: client.neighborhoodCli,
@@ -536,6 +536,17 @@ async function relatorioClientes(){
 ////////////////////////////// fim - relatorio de clientes ///////////////////////////////////////////
 
 
+////////////////////////////// validação de busca (preenchimento obrigatorio)////////////////////
+ipcMain.on('validate-search', () =>{
+    dialog.showMessageBox({
+        type: 'warning',
+        title: "Atenção!!",
+        message: "Preencha o campo de busca",
+        buttons: ['OK']
+    })
+})
+
+
 
 /////////////////////////////// começo - pesquisa pelo nome /////////////////////////////////
 
@@ -586,3 +597,5 @@ ipcMain.on('search-name',async (event,name) =>{
  
  
  ///////////////////////////////// fim - pesquisa pelo nome //////////////////////////////////////////
+
+ 

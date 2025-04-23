@@ -85,6 +85,8 @@ frmClient.addEventListener('submit', async (event) => {
 });
 
 
+
+
 //////////////////////////////////////////// reset form ///////////////////////////////////////
 function resetForm() {
     //limpar os campos e resetar o formulario com as configuraçoes pré definidas
@@ -123,3 +125,17 @@ function buscarCliente(){
         });
     })
 }
+
+//////////////// setar o cliente não cadastrado (recortar do campo de busca e colar no camppo nome)
+ 
+api.setClient((args) => {
+    // criar uma variavel p armazenar o valor digitado no campo de busca (nome ou cpf)
+    let campoBusca = document.getElementById('searchClient').value
+    // foco no campo de nome do cliente
+    nameClient.focus()
+    // remover o valor digitado no campo de busca
+    foco.value =""
+    // preencher o campo de nome do cliente com o nome da busca
+    nameClient.value = campoBusca
+})
+// ////////////////////////// fim do crud read ////////////////// 
