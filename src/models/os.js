@@ -9,10 +9,11 @@ const {model , Schema} = require('mongoose')
 const { type } = require('os')
 
 // criação da estrutura da coleção clientes
-const OSchema = new Schema({ 
-    nomeCliente: {type: String},
-    cpfCliente: {type: String,// unique: true,index: true
-    },
+const OSchema = new Schema({
+    clienteos:     { type: String, required: true },
+//nomeCliente: {type: String},
+  //  cpfCliente: {type: String,// unique: true,index: true
+  //  },
     funcionarioos: {type:String},
     statusos: {type:String},
     serviçosos: {type:String},

@@ -20,7 +20,8 @@ contextBridge.exposeInMainWorld('api',{
     newbike :(bike)=>ipcRenderer.send('new-bike',bike),
     resetForm: (args) => ipcRenderer.on('reset-form', args),
     searchName:(name)=>ipcRenderer.send('search-name',name),
-    renderClient:(dataClient)=>ipcRenderer.on('render-client', dataClient)
+    renderClient:(dataClient)=>ipcRenderer.on('render-client', dataClient),
+    
        
 })
 

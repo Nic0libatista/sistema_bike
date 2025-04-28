@@ -435,7 +435,8 @@ ipcMain.on('new-os', async (event, OS) => {
             statusos: OS.statusos,
             serviçosos: OS.serviçosos,
             valoros: OS.valoros,
-            mecanicoos: OS.mecanicoos
+            mecanicoos: OS.mecanicoos,
+            clienteos: OS.clienteos
         })
          //salvar os dados Clientes no banco de dados
          await newOs.save()
