@@ -10,6 +10,14 @@ const bike = require('./bike');
 
 // criação da estrutura da coleção clientes
 const bikeSchema = new Schema({
+    nomeCliente: {
+        type: String
+    },
+    cpfCliente: {
+        type: String,
+    // unique: true,
+        index: true
+    },
     marcaCli: {
         type: String
     },

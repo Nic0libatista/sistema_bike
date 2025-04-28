@@ -8,8 +8,8 @@ const foco = document.getElementById('searchClient')
 
 // Capturar os dados dos inputs
 let frmClientbike = document.getElementById('frmClientbike');
-//let nameClient = document.getElementById('inputNameClient');
-//let cpfClient = document.getElementById('inputCPFClient');
+let nameClient = document.getElementById('inputNameClient');
+let cpfClient = document.getElementById('inputCPFClient');
 let marcaCliente = document.getElementById('inputMarcaClient');
 let modeloCliente = document.getElementById('inputModelClient');
 let chassiCliente = document.getElementById('inputChassiClient');
@@ -27,12 +27,14 @@ frmClientbike.addEventListener('submit', async (event) => {
 
     
 // Teste para verificar recebimento dos dados
-    console.log(marcaCliente.value, modeloCliente.value,chassiCliente.value ,  corCliente.value, tipoCliente.value, obsCliente.value);
+    console.log( nameClient.value,cpfClient.value, marcaCliente.value, modeloCliente.value,chassiCliente.value ,  corCliente.value, tipoCliente.value, obsCliente.value);
 
 
 
 // Criar objeto para armazenar os dados do cliente
 const bike = {
+    nameCli: nameClient.value,
+    cpfCli: cpfClient.value,
     marcaCli: marcaCliente.value,
     modeloCli: modeloCliente.value,
     chassiCli: chassiCliente.value,

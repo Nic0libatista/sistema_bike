@@ -402,7 +402,8 @@ ipcMain.on('new-bike', async (event,bike) => {
         //criar nova estrutura de dados usando a class modelo. !!! os atributos precisam ser identicos ao modelo de dados cliente.js
         // e os valores são definidos pelo conteúdo de objeto cliente
         const newbike = new clientBikeModel({
-            
+            nomeCliente: bike.nameCli,
+            cpfCliente: bike.cpfCli,
             marcaCli: bike.marcaCliente,
             modeloCli: bike.modeloCli,
             chassiCli: bike.chassiCli,

@@ -10,7 +10,9 @@ const { type } = require('os')
 
 // criação da estrutura da coleção clientes
 const OSchema = new Schema({ 
-
+    nomeCliente: {type: String},
+    cpfCliente: {type: String,// unique: true,index: true
+    },
     funcionarioos: {type:String},
     statusos: {type:String},
     serviçosos: {type:String},
