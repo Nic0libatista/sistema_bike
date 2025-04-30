@@ -19,7 +19,7 @@ const OSchema = new Schema({
     serviçosos: {type:String},
     valoros: {type:String},
     mecanicoos: {type: String}
-    
+     
 
 
 },//não versiona os dados armazenado

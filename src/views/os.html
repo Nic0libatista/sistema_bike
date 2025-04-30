@@ -43,14 +43,16 @@
     <!-- Cliente -->
     <div class="col-md-6 d-flex gap-2">
         <input type="text" class="form-control" id="inputSearchClient" maxlength="30" spellcheck="false" placeholder="Buscar cliente">
-        <button type="button" class="btn btn-primary" onclick="searchClient()">Buscar</button>
+        <button type="button" class="btn btn-primary" onclick="buscarCliente()">Buscar</button>
     </div>
 
     
     <!-- Modelo da bike -->
     <div class="col-md-6 d-flex gap-2">
-        <input type="text" class="form-control" id="searchModel" maxlength="10" spellcheck="false" placeholder="Modelo da bicicleta">
-        <button type="button" class="btn btn-primary" onclick="searchModel()">Buscar</button>
+       
+        <input type="text" class="form-control" id="searchModel" list="listaModelos" placeholder="Modelo da bicicleta">
+        <datalist id="listaModelos"></datalist>
+        
     </div>
 </div>
 

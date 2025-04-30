@@ -601,3 +601,107 @@ ipcMain.on('search-name',async (event,name) =>{
  ///////////////////////////////// fim - pesquisa pelo nome //////////////////////////////////////////
 
  
+/// crud deletee ////////////////////
+ipcMain.on('delete-client',async(event,id)=>{
+    console.log(id)
+    try {
+        const {response }= await dialog.showMessageBox(client,{
+            type:'warning',
+            title:"Atenção",
+            message:"Deseja excluir este cliente? \n Esta ação não podera ser desfeita.",
+            buttons:['Cancelar', 'Excluir']
+        })
+        if (result.response === 1) {
+            const  delClient = await clientModel.findByIdAndDelete(id)
+            event.reply('reset-form')
+        } else {
+            
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
+
+
+
+// crud ipdate /////////////////////////////////
+
+
+
+
+
+ipcMain.on('update-client', async(event,client)=>{
+    console.log(client)
+    try {
+       
+
+const updateClient = await clientModel.findByIdAndUpdate(
+    client.idCli, 
+ {
+    nomeCliente: client.nameCli,
+    cpfCliente: client.cpfCli,
+    emailCliente: client.emailCli,
+    foneCliente: client.foneCli,
+    cepCliente: client.cepCli,
+    logradouroCliente: client.addressCli,
+    numeroCliente: client.numberCli,
+    complementoCliente: client.complementCli,
+    bairroCliente: client.neighborhoodCli,
+    cidadeCliente: client.cityCli,
+    ufCliente: client.ufCli
+        },
+            {
+                new: true
+            }
+        )
+    // mensagem de confirmação
+    dialog.showMessageBox({
+        //customização
+        type: 'info',
+        title: "aviso",
+        message: "dados do cliente aalterados com sucesso",
+        buttons: ['ok']
+}).then((result) => {
+   // ação ao pressionar o botao (result - 0)
+   if(result.response === 0){
+       // enviar pedido para o renderizador limpar os campos e resetar as conf pre definidas
+       // (rotulo 'reset-form) do preload js
+       event.reply('reset-form')
+   }
+   // ação ao pressionar o botão
+
+})
+
+// confirmação 
+
+
+    } catch(error){
+        console.log(error)
+    }
+})
+
+
+/////////////////////// busca por modelo ///////////////////////
+ipcMain.on('search-model', async (event, modelo) => {
+    try {
+        const dataBike = await clientBikeModel.find({
+            modeloCli: new RegExp(modelo, 'i') // busca insensível
+        });
+
+        if (dataBike.length === 0) {
+            dialog.showMessageBox({
+                type: 'info',
+                title: 'Aviso',
+                message: 'Modelo não cadastrado.'
+            }).then(() => {
+                event.reply('render-model', JSON.stringify([]));
+            });
+        } else {
+            event.reply('render-model', JSON.stringify(dataBike));
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});

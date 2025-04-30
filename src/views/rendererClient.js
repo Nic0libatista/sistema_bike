@@ -98,6 +98,7 @@ api.resetForm((args) => {
     resetForm()
 })
 
+/////////////////////////////////////////////////////////////////////////////////
 
 function buscarCliente(){
     let name=document.getElementById('searchClient').value
@@ -121,6 +122,12 @@ function buscarCliente(){
             neighborhoodClient.value=c.bairroCliente,
             cityClient.value=c.cidadeCliente,
             ufClient.value=c.ufCliente
+
+             // bloqueio do botão adicionar
+          btnCreate.disabled = true
+          // desbloqueio dos botões
+          btnUpdate.disabled = false
+          btnDelete.disabled = false
 
         });
     })
