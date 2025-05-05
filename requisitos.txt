@@ -21,7 +21,7 @@ requisitos
 
 
 --- excluir n funciona
-busca por cpf n funciona
+--- busca por cpf n funciona
 2 pagina do relatorio de clientes 
 --- tirar cor do observação
 tirar valoes da tabela

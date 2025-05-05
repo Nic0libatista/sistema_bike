@@ -559,7 +559,11 @@ ipcMain.on('search-name',async (event,name) =>{
     // regEXP (name,i) i= insensitive -- ignora maiusculo ou minusculo 
     try {
      const dataClient = await clientModel.find({
-         nomeCliente: new RegExp(name, 'i')
+        $or: [
+            {nomeCliente: new RegExp(name, 'i')},
+            {cpfCliente: new RegExp(name, 'i')}
+        ]
+         
  
      })
      console.log(dataClient)
