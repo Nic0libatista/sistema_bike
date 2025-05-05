@@ -38,17 +38,24 @@ footer p {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
- #img1,#img2, #img3, #img4 {
-    width: 140px;
-    height: 148px;
+ #img1,#img2 {
+    width: 135.43px;
+    height: 114.29px;
+}
+#img3{
+    width:135.43px;
+    height:118.86px;
 }
 
-
+/* ocultar o campo id do cliente */
+#idClient{
+    display: none;
+}
 
 
 #inputOBSClient{
     height: 80px;
-    background-color: rgba(128, 128, 128, 0.815);
+    /* background-color: rgba(128, 128, 128, 0.815); */
     
 }
 
@@ -57,4 +64,13 @@ footer p {
     max-width: 30px;
     max-height: 30px;
     object-fit: contain;
+}
+
+
+#logo {
+    position: fixed;
+    bottom: 40px;
+    right: 5px;
+    border: none;
+    cursor:none;
 }

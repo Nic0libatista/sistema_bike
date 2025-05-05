@@ -13,3 +13,16 @@ requisitos
 
 
 
+
+
+
+470 x 400
+474 x 416
+
+
+--- excluir n funciona
+busca por cpf n funciona
+2 pagina do relatorio de clientes 
+--- tirar cor do observação
+tirar valoes da tabela
+registrar peças 

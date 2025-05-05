@@ -456,25 +456,25 @@ async function relatorioClientes(){
         const clientes = await clientModel.find().sort({nomeCliente:1})
         // teste de recebimento da listagem de clientes
         // console.log(clientes)
-        const doc =new jsPDF ('p', 'mm', 'a4')
+        const doc = new jsPDF ('p', 'mm', 'a4')
         // definir o tamanho da  (tamanho equivalente ao word)
         // p = portrait | l = landscape | mm | a4
         // inserir imagem no doc html
         //imagempath é o caminho q será inserido no pdf
         // imagembase64 (uso da biblioteca fs para ler o arquivo no formato png)
-        //const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
-        //const imagebase64 = fs.readFileSync(imagePath, {encoding: 'base64'})
-        //doc.addImage(imagebase64, 'PNG', 5,8) // (5mm, 8mm) x,y
+        const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
+        const imagebase64 = fs.readFileSync(imagePath, {encoding: 'base64'})
+        doc.addImage(imagebase64, 'PNG', 5,8) // (5mm, 8mm) x,y
 
         doc.setFontSize(18)
         // escrever um texto (titulo)
-        doc.text("relatorio de clientes", 14, 45) // x,y (mm)
+        doc.text("relatorio de clientes", 80, 45) // x,y (mm)
         // inserir a data atual no relatorio
         const dataatual = new Date().toLocaleDateString('pt-BR')
         doc.setFontSize(12)
         doc.text(`Data: ${dataatual}`, 165, 10)
         // variavel de apoio na formatação
-        let y = 60
+        let y = 70
         doc.text("nome", 14,y)
         doc.text("telefone",80, y)
         doc.text("email", 130, y)
@@ -602,25 +602,29 @@ ipcMain.on('search-name',async (event,name) =>{
 
  
 /// crud deletee ////////////////////
-ipcMain.on('delete-client',async(event,id)=>{
-    console.log(id)
+
+ipcMain.on('delete-client', async (event, id) => {
+    console.log(id) // teste do passo 2 (recebimento do id)
     try {
-        const {response }= await dialog.showMessageBox(client,{
-            type:'warning',
-            title:"Atenção",
-            message:"Deseja excluir este cliente? \n Esta ação não podera ser desfeita.",
-            buttons:['Cancelar', 'Excluir']
+        //importante - confirmar a exclusão
+        //client é o nome da variável que representa a janela
+        const { response } = await dialog.showMessageBox(client, {
+            type: 'warning',
+            title: "Atenção!",
+            message: "Deseja excluir este cliente?\nEsta ação não poderá ser desfeita.",
+            buttons: ['Cancelar','Excluir'] //[0, 1]
         })
-        if (result.response === 1) {
-            const  delClient = await clientModel.findByIdAndDelete(id)
+        if (response === 1) {
+            console.log("teste do if de excluir")
+            //Passo 3 - Excluir o registro do cliente
+            const delClient = await clientModel.findByIdAndDelete(id)
             event.reply('reset-form')
-        } else {
-            
         }
     } catch (error) {
         console.log(error)
     }
 })
+
 
 
 

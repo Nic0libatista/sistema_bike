@@ -43,11 +43,16 @@ function getServicosSelecionados() {
     return servicosSelecionados.join(', ');
 }
 
+function buscarCliente() {
+    searchClient();
+}
+
+
 frmOs.addEventListener('submit', async (event) => {
     event.preventDefault();
 
       // ⚠️ Se não buscar cliente, bloqueia
-      if (!nomeClienteOs || nomeClienteOs.trim() === '') {
+      if (!nomeClienteOs) {
         alert('⚠️ Busque o cliente antes de gerar a OS!');
         return;
     }
@@ -70,3 +75,14 @@ frmOs.addEventListener('submit', async (event) => {
 
     api.newOs(OS);
 });
+function resetForm() {
+    //limpar os campos e resetar o formulario com as configuraçoes pré definidas
+    
+    location.reload()
+}
+
+api.resetForm((args) => {
+    resetForm()
+})
+
+

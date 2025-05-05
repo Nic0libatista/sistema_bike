@@ -60,3 +60,39 @@ api.setClient((args) => {
     // preencher o campo de nome do cliente com o nome da busca
     nameClient.value = campoBusca
 })
+
+
+
+function buscarCliente(){
+    let name=document.getElementById('searchClient').value
+    console.log(name)
+    api.searchName(name)
+    //recebimento dos dados do cliente
+    api.renderClient((event,dataClient) => {
+        // console.log(dataClient) // teste
+        const dadosCliente=JSON.parse(dataClient)
+        arrayClient =dadosCliente
+
+        arrayClient.forEach((c) =>{
+            nameClient.value=c.nomeCliente,
+            cpfClient.value=c.cpfCliente
+
+             // bloqueio do botão adicionar
+          btnCreate.disabled = false
+          // desbloqueio dos botões
+          btnUpdate.disabled = false
+          btnDelete.disabled = false
+
+        });
+    })
+}
+
+function resetForm() {
+    //limpar os campos e resetar o formulario com as configuraçoes pré definidas
+    
+    location.reload()
+}
+
+api.resetForm((args) => {
+    resetForm()
+})

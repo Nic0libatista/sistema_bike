@@ -50,7 +50,8 @@ let numberClient = document.getElementById('inputNumberClient');
 let complementClient = document.getElementById('inputComplementClient');
 let neighborhoodClient = document.getElementById('inputNeighboorhoodClient');
 let cityClient = document.getElementById('inputCityClient');
-let ufClient = document.getElementById('inputUFCliente');
+let ufClient = document.getElementById('inputUFCliente')
+let id = document.getElementById('idClient');
 
 
 
@@ -111,17 +112,18 @@ function buscarCliente(){
         arrayClient =dadosCliente
 
         arrayClient.forEach((c) =>{
-            nameClient.value=c.nomeCliente,
-            cpfClient.value=c.cpfCliente,
-            emailClient.value=c.emailCliente,
-            phoneClient.value=c.foneCliente,
-            cepClient.value=c.cepCliente,
-            addressClient.value=c.logradouroCliente,
-            numberClient.value=c.numeroCliente,
-            complementClient.value=c.complementoCliente,
-            neighborhoodClient.value=c.bairroCliente,
-            cityClient.value=c.cidadeCliente,
-            ufClient.value=c.ufCliente
+           id.value = c._id,
+                nameClient.value=c.nomeCliente,
+                cpfClient.value=c.cpfCliente,
+                emailClient.value=c.emailCliente,
+                phoneClient.value=c.foneCliente,
+                cepClient.value=c.cepCliente,
+                addressClient.value=c.logradouroCliente,
+                numberClient.value=c.numeroCliente,
+                complementClient.value=c.complementoCliente,
+                neighborhoodClient.value=c.bairroCliente,
+                cityClient.value=c.cidadeCliente,
+                ufClient.value=c.ufCliente
 
              // bloqueio do botão adicionar
           btnCreate.disabled = true
@@ -146,3 +148,8 @@ api.setClient((args) => {
     nameClient.value = campoBusca
 })
 // ////////////////////////// fim do crud read ////////////////// 
+
+function excluirCliente(){
+    console.log(id.value) // passo 1 (receber do form o id)
+    api.deleteClient(id.value)
+}
