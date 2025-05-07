@@ -490,16 +490,23 @@ async function relatorioClientes(){
         clientes.forEach((c) => {
             // add outra pg se a folha inteira for preenchida (estrategia é saber tamanho da folha)
             // folha a4 tem y=297mm
-            if (y > 280) {
+            if (y > 265) {
                 doc.addPage()
-                y= 20 // reseta a variavel y
-                doc.text(c.nomeCliente, 14, y)
-                doc.text(c.foneCliente, 80, y)
-                doc.text(c.emailCliente || "n/a", 130, y)
+                y = 30 // reseta a variavel y
+                doc.text("nome", 14,y)
+                doc.text("telefone",80, y)
+                doc.text("email", 130, y)
+              
                 y+=5
+                
                 // desenhar uma linha
                 doc.setLineWidth(0.5) // expessura da linha
                 doc.line(10,y, 200,y) // 10 (inicio) --------- 200 (fim)
+                y+=10
+                doc.text(c.nomeCliente, 14, y)
+                doc.text(c.foneCliente, 80, y)
+                doc.text(c.emailCliente || "n/a", 130, y)
+                
                 y+=10
 
             }

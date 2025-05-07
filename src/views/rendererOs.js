@@ -46,7 +46,7 @@ function getServicosSelecionados() {
 function buscarCliente() {
     searchClient();
 }
-
+ 
 
 frmOs.addEventListener('submit', async (event) => {
     event.preventDefault();
