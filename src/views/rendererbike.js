@@ -18,7 +18,64 @@ let tipoCliente = document.getElementById('inputTypeCliente');
 let obsCliente = document.getElementById('inputOBSClient');
 let fotoCliente = document.getElementById('inputPhotoClient');
 
-    
+
+let arrayClients = []
+
+input.addEventListener('input', () => {
+    const search = input.value.toLowerCase() //captura o que foi digitado e converte tudo para minúsculo
+    suggestionList.innerHTML = ""
+
+    // Buscar os nomes dos clientes no banco
+    api.searchClients()
+
+    // Listar os clientes 
+    api.listClients((event, clients) => {
+        const listaClientes = JSON.parse(clients)
+        arrayClients = listaClientes
+
+        //Filtra os clientes cujo nome (c.nomeCliente) contém o texto digitado(search)
+        const results = arrayClients.filter(c =>
+            c.nomeCliente && c.nomeCliente.toLowerCase().includes(search)
+        ).slice(0, 10) // máximo 10 nomes
+
+        suggestionList.innerHTML = "" // limpa novamente após possível atraso
+
+        // Para cada resultado, cria um item da lista
+        results.forEach(c => {
+            const item = document.createElement('li')
+            item.classList.add('list-group-item', 'list-group-item-action')
+            item.textContent = c.nomeCliente
+
+            // Adiciona evento de clique no ítem da lista para preencher os campos do form
+            item.addEventListener('click', () => {
+               // idClient.value = c._id
+                nomeCliente.value = c.nomeCliente
+                cpfCliente.value = c.cpfCliente
+                input.value = ""
+                suggestionList.innerHTML = ""
+            })
+
+            // adiciona os nomes(itens <li>) a lista <ul>
+            suggestionList.appendChild(item)
+        })
+    })
+})
+
+// setar o foco no campo de busca (validação de busca do cliente obrigatória)
+api.setSearch((args) => {
+    input.focus()
+})
+
+// Ocultar lista ao clicar fora
+document.addEventListener('click', (e) => {
+    if (!input.contains(e.target) && !suggestionList.contains(e.target)) {
+        suggestionList.innerHTML = ""
+    }
+})
+
+// == Fim - busca avançada =====================================
+// =============================================================
+
 
 // CRUD CREATE/UPDATE
 frmClientbike.addEventListener('submit', async (event) => {

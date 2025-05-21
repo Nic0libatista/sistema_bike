@@ -74,3 +74,25 @@ footer p {
     border: none;
     cursor:none;
 }
+
+
+/* Botão Buscar OS */
+#btnBuscaOS {
+    margin-left: 370px;
+}
+
+
+/* Remove as setas em todos os navegadores */
+input[type=number] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+    /* Firefox */
+    -webkit-appearance: none;
+    /* Safari e Chrome */
+}
+
+/* Remove as setas do Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    display: none;
+}

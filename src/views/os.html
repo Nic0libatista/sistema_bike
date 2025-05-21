@@ -20,13 +20,13 @@
             <!-- OS -->
             <div class="col-md-4">
                 <label class="form-label">Nº OS</label>
-                <input type="text" class="form-control" id="txtOs" disabled>
+                <input type="text" class="form-control" id="inputOS" disabled>
             </div>
 
             <!-- Data -->
             <div class="col-md-3">
-                <label class="form-label">Data</label>
-                <input type="text" class="form-control" id="Dataa" disabled>
+                <label class="form-label">Data de entrada</label>
+                <input type="text" class="form-control" id="inputData" disabled>
             </div>
 
             <!-- nome do funcionario -->
@@ -40,21 +40,41 @@
             <!-- Buscar cliente e modelo -->
            <!-- Linha com busca de cliente e modelo da bike lado a lado -->
 <div class="row">
-    <!-- Cliente -->
+    <!-- Cliente 
     <div class="col-md-6 d-flex gap-2">
         <input type="text" class="form-control" id="inputSearchClient" maxlength="30" spellcheck="false" placeholder="Buscar cliente">
         <button type="button" class="btn btn-primary" onclick="buscarCliente()">Buscar</button>
+   </div>
+-->
+    <!-- Buscar cliente -->
+    <div class="col-md-4">
+        <label for="inputSearchClient" class="form-label"></label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="inputSearchClient" spellcheck="false" maxlength="30" placeholder="Buscar cliente" >
+            <span class="input-group-text">
+                <img src="../public/img/search.png" alt="lupa" width="20" >
+            </span>
+        </div>
+        <!-- Lista de sugestões usando classes bootstrap -->
+        <ul id="viewListSuggestion" class="list-group position-absolute w-100" onclick="buscarCliente()"></ul>
     </div>
 
+
     
-    <!-- Modelo da bike -->
-    <div class="col-md-6 d-flex gap-2">
-       
-        <input type="text" class="form-control" id="searchModel" list="listaModelos" placeholder="Modelo da bicicleta">
-        <datalist id="listaModelos"></datalist>
+ <!-- Buscar cliente -->
+ <div class="col-md-4">
+    <label for="inputSearchBike" class="form-label"></label>
+    <div class="input-group">
+        <input type="text" class="form-control" id="inputSearchBike" spellcheck="false" maxlength="30" placeholder="Buscar modelos" >
+        <span class="input-group-text">
+            <img src="../public/img/search.png" alt="lupa" width="20" >
+        </span>
+    </div>
+
+</div>
         
     </div>
-</div>
+
 
 <hr>
 
@@ -93,8 +113,19 @@
             <label for="inputRelatorioTecnico" class="form-label">Relatório Técnico</label>
             <input type="text" id="inputRelatorioTecnico" class="form-control" placeholder="Relatório técnico" maxlength="400">
         </div>
+
+     <!-- Peças -->
+ 
+
+<div class="mb-3">
+    <label for="inputPecas" class="form-label"> peças </label>
+    <input type="text" id="inputPecas" class="form-control" placeholder="peças" maxlength="400">
+</div>
+
+
     </div>
 
+    
     <!-- Serviços (direita) -->
     <div class="col-md-4">
         <label class="form-label">Serviços</label>

@@ -25,4 +25,4 @@ requisitos
 --- 2 pagina do relatorio de clientes 
 --- tirar cor do observação
 --- tirar valoes da tabela
-registrar peças 
+--- registrar peças 
