@@ -59,9 +59,15 @@
         <ul id="viewListSuggestion" class="list-group position-absolute w-100" onclick="buscarCliente()"></ul>
     </div>
 
+      <!-- Id -->
+      <div class="col-md-2">
+        <label for="inputIdClient" class="form-label">Id do cliente</label>
+        <input type="text" class="form-control" id="inputIdClient" spellcheck="false" maxlength="15" disabled>
+    </div>
+
 
     
- <!-- Buscar cliente -->
+ <!-- Buscar modelos -->
  <div class="col-md-4">
     <label for="inputSearchBike" class="form-label"></label>
     <div class="input-group">
@@ -230,7 +236,7 @@
             <!-- Botões -->
             <div class="d-flex justify-content-center gap-1 w-100 mt-4">
                 <button type="submit" class="btn btn-success">Gerar OS</button>
-                <button type="button" class="btn btn-primary">Buscar OS</button>
+                <button type="button" class="btn btn-primary" onclick="findOS()">Buscar OS</button>
                 <button type="button" class="btn btn-warning">Editar OS</button>
                 <button type="button" class="btn btn-danger">Excluir OS</button>
                 <button type="button" class="btn btn-secondary">Imprimir OS</button>
@@ -242,7 +248,6 @@
 
     <!-- Scripts -->
     <script src="../public/js/bootstrap.min.js"></script>
-    <script src="../public/js/script.js"></script>
     <script src="../views/rendereros.js"></script>
 
 </body>

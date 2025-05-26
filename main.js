@@ -5,6 +5,8 @@ const { app, BrowserWindow, nativeTheme, Menu, ipcMain, dialog, shell } = requir
 //linha relacionada ao preload.js
 const path = require('node:path')
 
+const mongoose = require('mongoose')
+
 // importação dos modulo de conectar e desconectar (modulo de conexão)
 const {conectar, desconectar} = require('./database.js')
 
@@ -18,6 +20,8 @@ const OSModel = require('./src/models/os.js')
 const {jspdf, default: jsPDF} = require('jspdf')
 //importação da biblioteca fs (nativa js) p manipulação de arquivos (no caso, uso do pdf)
 const fs = require('fs')
+
+const prompt = require('electron-prompt')
 
 
 // Janela principal
@@ -144,7 +148,7 @@ function osWindow() {
     if(main) {
         os = new BrowserWindow({
             width: 1100,
-            height: 850,
+            height: 880,
           //  autoHideMenuBar: true,
             resizable: false,
             parent: main,
@@ -770,7 +774,7 @@ ipcMain.on('new-os', async (event, os) => {
     // Cadastrar a estrutura de dados no banco de dados MongoDB
     try {
         // criar uma nova de estrutura de dados usando a classe modelo. Atenção! Os atributos precisam ser idênticos ao modelo de dados OS.js e os valores são definidos pelo conteúdo do objeto os
-        const newOS = new osModel({
+        const newOS = new OSModel({
             idCliente: os.idClient_OS,
             statusOS: os.stat_OS,
             computador: os.computer_OS,
@@ -825,7 +829,7 @@ ipcMain.on('search-os', async (event) => {
             // Verificar se o ID é válido (uso do mongoose - não esquecer de importar)
             if (mongoose.Types.ObjectId.isValid(result)) {
                 try {
-                    const dataOS = await osModel.findById(result)
+                    const dataOS = await OSModel.findById(result)
                     if (dataOS) {
                         console.log(dataOS) // teste importante
                         // enviando os dados da OS ao rendererOS
@@ -855,4 +859,81 @@ ipcMain.on('search-os', async (event) => {
 })
 
 // == Fim - Buscar OS - CRUD Read =============================
+// ============================================================
+
+
+// ============================================================
+// == Excluir OS - CRUD Delete  ===============================
+
+ipcMain.on('delete-os', async (event, idOS) => {
+    console.log(idOS) // teste do passo 2 (recebimento do id)
+    try {
+        //importante - confirmar a exclusão
+        //osScreen é o nome da variável que representa a janela OS
+        const { response } = await dialog.showMessageBox(osScreen, {
+            type: 'warning',
+            title: "Atenção!",
+            message: "Deseja excluir esta ordem de serviço?\nEsta ação não poderá ser desfeita.",
+            buttons: ['Cancelar', 'Excluir'] //[0, 1]
+        })
+        if (response === 1) {
+            //console.log("teste do if de excluir")
+            //Passo 3 - Excluir a OS
+            const delOS = await OSModel.findByIdAndDelete(idOS)
+            event.reply('reset-form')
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+// == Fim Excluir OS - CRUD Delete ============================
+// ============================================================
+
+
+// ============================================================
+// == Editar OS - CRUD Update =================================
+
+ipcMain.on('update-os', async (event, os) => {
+    //importante! teste de recebimento dos dados da os (passo 2)
+    console.log(os)
+    // Alterar os dados da OS no banco de dados MongoDB
+    try {
+        // criar uma nova de estrutura de dados usando a classe modelo. Atenção! Os atributos precisam ser idênticos ao modelo de dados OS.js e os valores são definidos pelo conteúdo do objeto os
+        const updateOS = await OSModel.findByIdAndUpdate(
+            os.id_OS,
+            {
+                idCliente: os.idClient_OS,
+                nomeFuncionario: os.funcionarioos,
+                osStatus: os.statusos,
+                servicos: os.serviçosos,
+                alorTotal: os. valoros,
+                nameMecanico: os.mecanicoos,
+                nomeClienteOs:os.clienteos,
+                pecas: os.pecasos   
+            },
+            {
+                new: true
+            }
+        )
+        // Mensagem de confirmação
+        dialog.showMessageBox({
+            //customização
+            type: 'info',
+            title: "Aviso",
+            message: "Dados da OS alterados com sucesso",
+            buttons: ['OK']
+        }).then((result) => {
+            //ação ao pressionar o botão (result = 0)
+            if (result.response === 0) {
+                //enviar um pedido para o renderizador limpar os campos e resetar as configurações pré definidas (rótulo 'reset-form' do preload.js
+                event.reply('reset-form')
+            }
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+// == Fim Editar OS - CRUD Update =============================
 // ============================================================

@@ -36,7 +36,7 @@ input.addEventListener('input', () => {
 
             // Adiciona evento de clique no ítem da lista para preencher os campos do form
             item.addEventListener('click', () => {
-               // idClient.value = c._id
+                idClient.value = c._id
                // nameClient.value = c.nomeCliente
                // phoneClient.value = c.
                 input.value = c.nomeCliente
@@ -142,21 +142,51 @@ frmOs.addEventListener('submit', async (event) => {
 
     console.log(nomeFuncionario.value, osStatus.value, servicos, valorTotal.value, nameMecanico.value, pecas.value, nomeClienteOs);
 
-    const OS = {
-        
-        funcionarioos: nomeFuncionario.value,
-        statusos: osStatus.value,
-        serviçosos: servicos,
-        valoros: valorTotal.value,
-        mecanicoos: nameMecanico.value,
-        clienteos: nomeClienteOs,
-        pecasos: pecas.value
 
-    };
+     // validação do campo obrigatório 'idClient' (validação html não funciona via html para campos desativados)
+     if (idClient.value === "") {
+        api.validateClient()
+    } else {
+        // Teste importante (recebimento dos dados do formuláro - passo 1 do fluxo)
+       // console.log(idOS.value, idClient.value, statusOS.value, computer.value, serial.value, problem.value, obs.value, specialist.value, diagnosis.value, parts.value, total.value)
+        if (idOS.value === "") {
+            //Gerar OS
+            //Criar um objeto para armazenar os dados da OS antes de enviar ao main
+            const os = {
+                funcionarioos: nomeFuncionario.value,
+                statusos: osStatus.value,
+                serviçosos: servicos,
+                valoros: valorTotal.value,
+                mecanicoos: nameMecanico.value,
+                clienteos: nomeClienteOs,
+                pecasos: pecas.value        
+            }
+            // Enviar ao main o objeto os - (Passo 2: fluxo)
+            // uso do preload.js
+            api.newOs(os);
+        } else {
+            //Editar OS
+            //Gerar OS
+            //Criar um objeto para armazenar os dados da OS antes de enviar ao main
+            const os = {
+                funcionario_os: nomeFuncionario.value,
+                status_os: osStatus.value,
+        serviços_os: servicos,
+        valor_os: valorTotal.value,
+        mecanico_os: nameMecanico.value,
+        cliente_os: nomeClienteOs,
+        pecas_os: pecas.value
 
-    api.newOs(OS);
-});
+            }
+            // Enviar ao main o objeto os - (Passo 2: fluxo)
+            // uso do preload.js
+            api.updateOS(os)
+        }
+    }
+})
 
+
+ 
 // == Buscar OS - CRUD Read ===================================
 
 function findOS() {
@@ -180,16 +210,33 @@ api.renderOS((event, dataOS) => {
     })
     dateOS.value = formatada
      nomeFuncionario= os.nomefuncionario
+     idClient.value = os.idCliente
    osStatus= os.status
      servicos = os.servicos
      valorTotal= os.total
     nameMecanico = os.nomemecanico
     nomeClienteOs = os.nomecliente
    pecas = os.pecas
+      // desativar o botão adicionar
+      btnCreate.disabled = true
+      // ativar os botões editar e excluir
+      btnUpdate.disabled = false
+      btnDelete.disabled = false   
 
 })
 
 // == Fim - Buscar OS - CRUD Read =============================
+// ============================================================
+
+// ============================================================
+// == CRUD Delete =============================================
+
+function removeOS() {
+    console.log(idOS.value) // Passo 1 (receber do form o id da OS)
+    api.deleteOS(idOS.value) // Passo 2 (enviar o id da OS ao main)
+}
+
+// == Fim - CRUD Delete =======================================
 // ============================================================
 
 

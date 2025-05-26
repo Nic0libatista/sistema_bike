@@ -32,9 +32,10 @@ contextBridge.exposeInMainWorld('api',{
     searchOS: () => ipcRenderer.send('search-os'),
     validateClient: () => ipcRenderer.send('validate-client'),
     setSearch: (args) => ipcRenderer.on('set-search', args),
-    renderOS: (dataOS) => ipcRenderer.on('render-os', dataOS)
+    renderOS: (dataOS) => ipcRenderer.on('render-os', dataOS),
+    deleteOS: (idOS) => ipcRenderer.send('delete-os', idOS),
+    updateOS: (os) => ipcRenderer.send('update-os', os)
 })
-
 
 function dbstatus(message){
     ipcRenderer.on('db-status', message)
