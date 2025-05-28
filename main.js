@@ -426,33 +426,6 @@ ipcMain.on('new-bike', async (event,bike) => {
 
 ////////////////////////////////////// fim bike - crud //////////////////
 
-/////////////////////////////// OS - CRUD CREATE
-ipcMain.on('new-os', async (event, OS) => {
-    // IMPORTANTE!! teste do passo dois
-    console.log(OS)
-    // Cadastrar a estrutura de dados do banco de dados Mongodb
-    //ATENÇÃO !! os atributos deve ser identicos ao modelo de dados clientes.js
-    //
-    try {
-        //cria uma nova estrutura de dados usando classe  modelo
-        const newOs = new OSModel({
-            funcionarioos: OS.funcionarioos,
-            statusos: OS.statusos,
-            serviçosos: OS.serviçosos,
-            valoros: OS.valoros,
-            mecanicoos: OS.mecanicoos,
-            clienteos: OS.clienteos,
-            pecasos: OS.pecasos
-        })
-         //salvar os dados Clientes no banco de dados
-         await newOs.save()
-    } catch (error) {
-        console.log(error)
-    } 
-})
-
-//== FIM - OS - CRUD CREATE
-
 
 ///////////////////////////// relatorio de clientes ////////////////////////////////////////////////
 
@@ -753,6 +726,7 @@ ipcMain.on('search-clients', async (event) => {
 // ============================================================
 // == CRUD Create - Gerar OS ==================================
 
+/*
 // Validação de busca (preenchimento obrigatório Id Cliente-OS)
 ipcMain.on('validate-client', (event) => {
     dialog.showMessageBox({
@@ -804,7 +778,55 @@ ipcMain.on('new-os', async (event, os) => {
     } catch (error) {
         console.log(error)
     }
+}) 
+
+*/
+
+
+/////////////////////////////// OS - CRUD CREATE
+ipcMain.on('new-os', async (event, OS) => {
+    // IMPORTANTE!! teste do passo dois
+    console.log(OS)
+    // Cadastrar a estrutura de dados do banco de dados Mongodb
+    //ATENÇÃO !! os atributos deve ser identicos ao modelo de dados clientes.js
+    //
+    try {
+        //cria uma nova estrutura de dados usando classe  modelo
+        const newOs = new OSModel({
+            idCliente: OS.idClient_OS,
+            funcionarioos: OS.funcionarioos,
+            statusos: OS.statusos,
+            serviçosos: OS.serviçosos,
+            valoros: OS.valoros,
+            mecanicoos: OS.mecanicoos,
+            clienteos: OS.clienteos,
+            pecasos: OS.pecasos,
+            relatorioclios: OS.relatorioclios,
+            relatoriotecos: OS.relatoriotecos
+        })
+         //salvar os dados Clientes no banco de dados
+         await newOs.save()
+  // Mensagem de confirmação
+  dialog.showMessageBox({
+    //customização
+    type: 'info',
+    title: "Aviso",
+    message: "OS gerada com sucesso",
+    buttons: ['OK']
+}).then((result) => {
+    //ação ao pressionar o botão (result = 0)
+    if (result.response === 0) {
+        //enviar um pedido para o renderizador limpar os campos e resetar as configurações pré definidas (rótulo 'reset-form' do preload.js
+        event.reply('reset-form')
+    }
 })
+} catch (error) {
+console.log(error)
+}
+}) 
+
+//== FIM - OS - CRUD CREATE
+
 
 // == Fim - CRUD Create - Gerar OS ===========================
 // ============================================================
@@ -907,10 +929,12 @@ ipcMain.on('update-os', async (event, os) => {
                 nomeFuncionario: os.funcionarioos,
                 osStatus: os.statusos,
                 servicos: os.serviçosos,
-                alorTotal: os. valoros,
+                valorTotal: os. valoros,
                 nameMecanico: os.mecanicoos,
                 nomeClienteOs:os.clienteos,
-                pecas: os.pecasos   
+                pecas: os.pecasos,
+                relatorioCli: os.relatorioclios,
+                relatorioTec: os.relatoriotecos
             },
             {
                 new: true
@@ -936,4 +960,176 @@ ipcMain.on('update-os', async (event, os) => {
 })
 
 // == Fim Editar OS - CRUD Update =============================
+// ============================================================
+
+
+// ============================================================
+// Impressão de OS ============================================
+
+// impressão via botão imprimir
+ipcMain.on('print-os', async (event) => {
+    prompt({
+        title: 'Imprimir OS',
+        label: 'Digite o número da OS:',
+        inputAttrs: {
+            type: 'text'
+        },
+        type: 'input',
+        width: 400,
+        height: 200
+    }).then(async (result) => {
+        // buscar OS pelo id (verificar formato usando o mongoose - importar no início do main)
+        if (result !== null) {
+            // Verificar se o ID é válido (uso do mongoose - não esquecer de importar)
+            if (mongoose.Types.ObjectId.isValid(result)) {
+                try {
+                    // teste do botão imprimir
+                    //console.log("imprimir OS")
+                    const dataOS = await OSModel.findById(result)
+                    if (dataOS && dataOS !== null) {
+                        console.log(dataOS) // teste importante
+                        // extrair os dados do cliente de acordo com o idCliente vinculado a OS
+                        const dataClient = await clientModel.find({
+                            _id: dataOS.idCliente
+                        })
+                        console.log(dataClient)
+                        // impressão (documento PDF) com os dados da OS, do cliente e termos do serviço (uso do jspdf)
+
+                        // formatação do documento pdf
+                        const doc = new jsPDF('p', 'mm', 'a4')
+                        const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
+                        const imageBase64 = fs.readFileSync(imagePath, { encoding: 'base64' })
+                        doc.addImage(imageBase64, 'PNG', 5, 8)
+                        doc.setFontSize(18)
+                        doc.text("Ordem de serviço", 100, 45) //x=14, y=45
+                        doc.setFontSize(12)
+
+                        // Extração dos dados do cliente vinculado a OS
+                        dataClient.forEach((c) => {
+                            doc.text("Cliente:", 14, 65),
+                                doc.text(c.nomeCliente, 34, 65),
+                                doc.text(c.foneCliente, 85, 65),
+                                doc.text(c.emailCliente || "N/A", 130, 65)
+                            //...
+                        })
+
+                        // Extração dos dados da OS                        
+                        doc.text(String(dataOS.serviçosos), 14, 85)
+                        doc.text(String(dataOS.valoros), 80, 85)
+                        doc.text("Relatorio do cliente: ", 14, 100)
+                        doc.text(String(dataOS.relatorioclios), 14, 110)
+                        doc.text("Relatorio técnico: ", 14, 120)
+                        doc.text(String(dataOS.relatoriotecos), 14, 130)
+
+                        // Texto do termo de serviço
+                        doc.setFontSize(10)
+                        const termo = `
+    Termo de Serviço e Garantia
+    
+    O cliente autoriza a realização dos serviços técnicos descritos nesta ordem, ciente de que:
+    
+    - Diagnóstico e orçamento são gratuitos apenas se o serviço for aprovado. Caso contrário, poderá ser cobrada taxa de análise.
+    - Peças substituídas poderão ser retidas para descarte ou devolvidas mediante solicitação no ato do serviço.
+    - A garantia dos serviços prestados é de 90 dias, conforme Art. 26 do Código de Defesa do Consumidor, e cobre exclusivamente o reparo executado ou peça trocada, desde que o equipamento não tenha sido violado por terceiros.
+    - Não nos responsabilizamos por dados armazenados. Recomenda-se o backup prévio.
+    - Equipamentos não retirados em até 90 dias após a conclusão estarão sujeitos a cobrança de armazenagem ou descarte, conforme Art. 1.275 do Código Civil.
+    - O cliente declara estar ciente e de acordo com os termos acima.`
+
+                        // Inserir o termo no PDF
+                        doc.text(termo, 14, 150, { maxWidth: 180 }) // x=14, y=60, largura máxima para quebrar o texto automaticamente
+
+                        // Definir o caminho do arquivo temporário e nome do arquivo
+                        const tempDir = app.getPath('temp')
+                        const filePath = path.join(tempDir, 'os.pdf')
+                        // salvar temporariamente o arquivo
+                        doc.save(filePath)
+                        // abrir o arquivo no aplicativo padrão de leitura de pdf do computador do usuário
+                        shell.openPath(filePath)
+                    } else {
+                        dialog.showMessageBox({
+                            type: 'warning',
+                            title: "Aviso!",
+                            message: "OS não encontrada",
+                            buttons: ['OK']
+                        })
+                    }
+
+                } catch (error) {
+                    console.log(error)
+                }
+            } else {
+                dialog.showMessageBox({
+                    type: 'error',
+                    title: "Atenção!",
+                    message: "Código da OS inválido.\nVerifique e tente novamente.",
+                    buttons: ['OK']
+                })
+            }
+        }
+    })
+})
+
+async function printOS(osId) {
+    try {
+        const dataOS = await OSModel.findById(osId)
+
+        const dataClient = await clientModel.find({
+            _id: dataOS.idCliente
+        })
+        console.log(dataClient)
+        // impressão (documento PDF) com os dados da OS, do cliente e termos do serviço (uso do jspdf)
+
+        // formatação do documento pdf
+        const doc = new jsPDF('p', 'mm', 'a4')
+        const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
+        const imageBase64 = fs.readFileSync(imagePath, { encoding: 'base64' })
+        doc.addImage(imageBase64, 'PNG', 5, 8)
+        doc.setFontSize(18)
+        doc.text("OS:", 14, 45) //x=14, y=45
+        doc.setFontSize(12)
+
+        // Extração dos dados do cliente vinculado a OS
+        dataClient.forEach((c) => {
+            doc.text("Cliente:", 14, 65),
+                doc.text(c.nomeCliente, 34, 65),
+                doc.text(c.foneCliente, 85, 65),
+                doc.text(c.emailCliente || "N/A", 130, 65)
+            //...
+        })
+
+        // Extração dos dados da OS                        
+        doc.text(String(dataOS.servicos), 14, 85)
+        doc.text(String(dataOS.valoros), 80, 85)
+
+        // Texto do termo de serviço
+        doc.setFontSize(10)
+        const termo = `
+Termo de Serviço e Garantia
+
+O cliente autoriza a realização dos serviços técnicos descritos nesta ordem, ciente de que:
+
+- Diagnóstico e orçamento são gratuitos apenas se o serviço for aprovado. Caso contrário, poderá ser cobrada taxa de análise.
+- Peças substituídas poderão ser retidas para descarte ou devolvidas mediante solicitação no ato do serviço.
+- A garantia dos serviços prestados é de 90 dias, conforme Art. 26 do Código de Defesa do Consumidor, e cobre exclusivamente o reparo executado ou peça trocada, desde que o equipamento não tenha sido violado por terceiros.
+- Não nos responsabilizamos por dados armazenados. Recomenda-se o backup prévio.
+- Equipamentos não retirados em até 90 dias após a conclusão estarão sujeitos a cobrança de armazenagem ou descarte, conforme Art. 1.275 do Código Civil.
+- O cliente declara estar ciente e de acordo com os termos acima.`
+
+        // Inserir o termo no PDF
+        doc.text(termo, 14, 150, { maxWidth: 180 }) // x=14, y=60, largura máxima para quebrar o texto automaticamente
+
+        // Definir o caminho do arquivo temporário e nome do arquivo
+        const tempDir = app.getPath('temp')
+        const filePath = path.join(tempDir, 'os.pdf')
+        // salvar temporariamente o arquivo
+        doc.save(filePath)
+        // abrir o arquivo no aplicativo padrão de leitura de pdf do computador do usuário
+        shell.openPath(filePath)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// Fim - Impressão de OS ======================================
 // ============================================================

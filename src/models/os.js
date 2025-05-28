@@ -15,12 +15,15 @@ const OSchema = new Schema({
   //  cpfCliente: {type: String,// unique: true,index: true
   //  },
   dataEntrada: { type: Date,default: Date.now},
+  idCliente: {type: String},
     funcionarioos: {type:String},
     statusos: {type:String},
     serviçosos: {type:String},
     valoros: {type:String},
     mecanicoos: {type: String},
-    pecasos: {type: String}
+    pecasos: {type: String},
+    relatorioclios: {type:String},
+    relatoriotecos: {type:String}
      
 
 

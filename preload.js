@@ -34,7 +34,8 @@ contextBridge.exposeInMainWorld('api',{
     setSearch: (args) => ipcRenderer.on('set-search', args),
     renderOS: (dataOS) => ipcRenderer.on('render-os', dataOS),
     deleteOS: (idOS) => ipcRenderer.send('delete-os', idOS),
-    updateOS: (os) => ipcRenderer.send('update-os', os)
+    updateOS: (os) => ipcRenderer.send('update-os', os),
+    printOS: () => ipcRenderer.send('print-os')
 })
 
 function dbstatus(message){

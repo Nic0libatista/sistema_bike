@@ -37,7 +37,7 @@ input.addEventListener('input', () => {
             // Adiciona evento de clique no ítem da lista para preencher os campos do form
             item.addEventListener('click', () => {
                 idClient.value = c._id
-               // nameClient.value = c.nomeCliente
+                nameClient.value = c.nomeCliente
                // phoneClient.value = c.
                 input.value = c.nomeCliente
                 suggestionList.innerHTML = ""
@@ -73,7 +73,8 @@ let osStatus = document.getElementById('osStatus');
 let valorTotal = document.getElementById('inputvalorTotal');
 let nameMecanico = document.getElementById('inputNameMecanico');
 let pecas = document.getElementById('inputPecas')
-
+let relatorioCli = document.getElementById('inputRelatorioCliente')
+let relatorioTec = document.getElementById('inputRelatorioTecnico')
 
 function searchClient() {
     let name = document.getElementById('inputSearchClient').value;
@@ -153,13 +154,17 @@ frmOs.addEventListener('submit', async (event) => {
             //Gerar OS
             //Criar um objeto para armazenar os dados da OS antes de enviar ao main
             const os = {
+                idClient_OS: idClient.value,
                 funcionarioos: nomeFuncionario.value,
                 statusos: osStatus.value,
                 serviçosos: servicos,
                 valoros: valorTotal.value,
                 mecanicoos: nameMecanico.value,
                 clienteos: nomeClienteOs,
-                pecasos: pecas.value        
+                pecasos: pecas.value,
+                relatorioclios: relatorioCli.value,
+                relatoriotecos: relatorioTec.value,
+                      
             }
             // Enviar ao main o objeto os - (Passo 2: fluxo)
             // uso do preload.js
@@ -169,14 +174,16 @@ frmOs.addEventListener('submit', async (event) => {
             //Gerar OS
             //Criar um objeto para armazenar os dados da OS antes de enviar ao main
             const os = {
-                funcionario_os: nomeFuncionario.value,
-                status_os: osStatus.value,
-        serviços_os: servicos,
-        valor_os: valorTotal.value,
-        mecanico_os: nameMecanico.value,
-        cliente_os: nomeClienteOs,
-        pecas_os: pecas.value
-
+                funcionarioos: nomeFuncionario.value,
+                statusos: osStatus.value,
+                serviçosos: servicos,
+                valoros: valorTotal.value,
+                mecanicoos: nameMecanico.value,
+                clienteos: nomeClienteOs,
+                pecasos: pecas.value,
+                relatorioclios: relatorioCli.value,
+                relatoriotecos: relatorioTec.value,
+           
             }
             // Enviar ao main o objeto os - (Passo 2: fluxo)
             // uso do preload.js
@@ -209,24 +216,41 @@ api.renderOS((event, dataOS) => {
         second: "2-digit"
     })
     dateOS.value = formatada
-     nomeFuncionario= os.nomefuncionario
-     idClient.value = os.idCliente
-   osStatus= os.status
-     servicos = os.servicos
-     valorTotal= os.total
-    nameMecanico = os.nomemecanico
-    nomeClienteOs = os.nomecliente
-   pecas = os.pecas
+    idClient.value = os.idCliente
+    // disparar ação de busca do cliente pelo id
+    idClient.dispatchEvent(new Event('change'))    
+    nomeFuncionario.value = os.funcionarioos
+osStatus.value = os.statusos
+valorTotal.value = os.valoros
+nameMecanico.value = os.mecanicoos
+nomeClienteOs = os.clienteos;
+input.value = os.clienteos;
+pecas.value = os.pecasos
+relatorioCli.value = os.relatorioclios
+relatorioTec.value = os.relatoriotecos
+servicos = os.serviçosos 
+
+  // Ativar checkboxes com base nos serviços retornados
+// Marcar os checkboxes dos serviços salvos na OS
+const servicosArray = os.serviçosos.split(',').map(s => s.trim().toLowerCase());
+
+document.querySelectorAll('input[type="checkbox"][id^="servico"]').forEach(checkbox => {
+    const valorCheckbox = checkbox.value.trim().toLowerCase();
+    checkbox.checked = servicosArray.includes(valorCheckbox);
+});
+
       // desativar o botão adicionar
       btnCreate.disabled = true
       // ativar os botões editar e excluir
       btnUpdate.disabled = false
       btnDelete.disabled = false   
 
+      
 })
 
 // == Fim - Buscar OS - CRUD Read =============================
 // ============================================================
+
 
 // ============================================================
 // == CRUD Delete =============================================
@@ -237,6 +261,17 @@ function removeOS() {
 }
 
 // == Fim - CRUD Delete =======================================
+// ============================================================
+
+
+// ============================================================
+// == Imprimir OS ============================================= 
+
+function generateOS() {
+    api.printOS()
+}
+
+// == Fm - Imprimir OS ======================================== 
 // ============================================================
 
 
