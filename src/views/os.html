@@ -67,7 +67,7 @@
 
 
     
- <!-- Buscar modelos -->
+ <!-- Buscar modelos 
  <div class="col-md-4">
     <label for="inputSearchBike" class="form-label"></label>
     <div class="input-group">
@@ -79,6 +79,12 @@
 
 </div>
         
+    </div> -->
+
+    <div class="col-md-4">
+            <input type="text" id="inputModelClient" class="form-control" placeholder="Modelo" maxlength="400">
+            <!-- opções serão inseridas dinamicamente -->
+        </select>
     </div>
 
 
@@ -237,8 +243,8 @@
             <div class="d-flex justify-content-center gap-1 w-100 mt-4">
                 <button type="submit" class="btn btn-success" id="btnCreate">Gerar OS</button>
                 <button type="button" class="btn btn-primary" onclick="findOS()">Buscar OS</button>
-                <button type="button" class="btn btn-warning" id="btnUpdate"> Editar OS</button>
-                <button type="button" class="btn btn-danger" id="btnDelete" onclick="removeOS()">Excluir OS</button>
+                <button type="submit" class="btn btn-warning" id="btnUpdate">Editar OS</button>
+                <button type="button" class="btn btn-danger" id="btnDelete"onclick="removeOS()">Excluir OS</button>
                 <button type="button" class="btn btn-secondary" onclick="generateOS()">Imprimir OS</button>
                 <button type="reset" class="btn btn-info" onclick="resetForm()">Resetar</button>
             </div>

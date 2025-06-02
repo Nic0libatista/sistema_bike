@@ -802,7 +802,8 @@ ipcMain.on('new-os', async (event, OS) => {
             clienteos: OS.clienteos,
             pecasos: OS.pecasos,
             relatorioclios: OS.relatorioclios,
-            relatoriotecos: OS.relatoriotecos
+            relatoriotecos: OS.relatoriotecos,
+            modeloos: OS.modeloos
         })
          //salvar os dados Clientes no banco de dados
          await newOs.save()
@@ -892,7 +893,7 @@ ipcMain.on('delete-os', async (event, idOS) => {
     try {
         //importante - confirmar a exclusão
         //osScreen é o nome da variável que representa a janela OS
-        const { response } = await dialog.showMessageBox(osScreen, {
+        const { response } = await dialog.showMessageBox(os, {
             type: 'warning',
             title: "Atenção!",
             message: "Deseja excluir esta ordem de serviço?\nEsta ação não poderá ser desfeita.",
@@ -926,15 +927,16 @@ ipcMain.on('update-os', async (event, os) => {
             os.id_OS,
             {
                 idCliente: os.idClient_OS,
-                nomeFuncionario: os.funcionarioos,
+                nomeFuncionarioos: os.funcionarioos,
                 osStatus: os.statusos,
-                servicos: os.serviçosos,
-                valorTotal: os. valoros,
-                nameMecanico: os.mecanicoos,
-                nomeClienteOs:os.clienteos,
+                serviços: os.serviçosos,
+                valorTotal: os.valoros,
+                nomeMecanico: os.mecanicoos,
+                nomeClienteOs: os.clienteos,
                 pecas: os.pecasos,
-                relatorioCli: os.relatorioclios,
-                relatorioTec: os.relatoriotecos
+                relatoriocli: os.relatorioclios,
+                relatoriotec: os.relatoriotecos,
+                modeloCli: os.modeloos
             },
             {
                 new: true
@@ -1013,12 +1015,19 @@ ipcMain.on('print-os', async (event) => {
                             //...
                         })
 
-                        // Extração dos dados da OS                        
-                        doc.text(String(dataOS.serviçosos), 14, 85)
-                        doc.text(String(dataOS.valoros), 80, 85)
+                        // Extração dos dados da OS    
+                        doc.setTextColor(15, 30, 60)
+                        doc.text("Serviços realizados: ", 14, 80)   
+                        doc.setTextColor(50, 50, 50)                 
+                        doc.text(String(dataOS.serviçosos), 14, 90)
+                        doc.text(String(dataOS.valoros), 80, 90)
+                        doc.setTextColor(15, 30, 60)
                         doc.text("Relatorio do cliente: ", 14, 100)
+                        doc.setTextColor(50, 50, 50)
                         doc.text(String(dataOS.relatorioclios), 14, 110)
+                        doc.setTextColor(15, 30, 60)
                         doc.text("Relatorio técnico: ", 14, 120)
+                        doc.setTextColor(50, 50, 50)
                         doc.text(String(dataOS.relatoriotecos), 14, 130)
 
                         // Texto do termo de serviço

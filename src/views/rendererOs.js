@@ -5,9 +5,12 @@ const input = document.getElementById('inputSearchClient')
 const suggestionList = document.getElementById('viewListSuggestion')
 let idClient = document.getElementById('inputIdClient')
 let nameClient = document.getElementById('inputNameClient')
-let phoneClient = document.getElementById('inputPhoneClient')
+
+const modeloCliente = document.getElementById('modeloCliente');
+// let phoneClient = document.getElementById('inputPhoneClient')
 
 let arrayClients = []
+
 
 input.addEventListener('input', () => {
     const search = input.value.toLowerCase() //captura o que foi digitado e converte tudo para minúsculo
@@ -41,6 +44,8 @@ input.addEventListener('input', () => {
                // phoneClient.value = c.
                 input.value = c.nomeCliente
                 suggestionList.innerHTML = ""
+
+                 
             })
 
             // adiciona os nomes(itens <li>) a lista <ul>
@@ -75,6 +80,7 @@ let nameMecanico = document.getElementById('inputNameMecanico');
 let pecas = document.getElementById('inputPecas')
 let relatorioCli = document.getElementById('inputRelatorioCliente')
 let relatorioTec = document.getElementById('inputRelatorioTecnico')
+let modeloCli = document.getElementById('inputModelClient')
 
 function searchClient() {
     let name = document.getElementById('inputSearchClient').value;
@@ -164,7 +170,7 @@ frmOs.addEventListener('submit', async (event) => {
                 pecasos: pecas.value,
                 relatorioclios: relatorioCli.value,
                 relatoriotecos: relatorioTec.value,
-                      
+                modeloos: modeloCli.value
             }
             // Enviar ao main o objeto os - (Passo 2: fluxo)
             // uso do preload.js
@@ -183,6 +189,7 @@ frmOs.addEventListener('submit', async (event) => {
                 pecasos: pecas.value,
                 relatorioclios: relatorioCli.value,
                 relatoriotecos: relatorioTec.value,
+                modeloos: modeloCli.value
            
             }
             // Enviar ao main o objeto os - (Passo 2: fluxo)
@@ -228,7 +235,8 @@ input.value = os.clienteos;
 pecas.value = os.pecasos
 relatorioCli.value = os.relatorioclios
 relatorioTec.value = os.relatoriotecos
-servicos = os.serviçosos 
+servicos = os.serviçosos,
+modeloCli.value =os.modeloos
 
   // Ativar checkboxes com base nos serviços retornados
 // Marcar os checkboxes dos serviços salvos na OS

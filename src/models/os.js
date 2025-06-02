@@ -23,7 +23,8 @@ const OSchema = new Schema({
     mecanicoos: {type: String},
     pecasos: {type: String},
     relatorioclios: {type:String},
-    relatoriotecos: {type:String}
+    relatoriotecos: {type:String},
+    modeloos: {type:String}
      
 
 
