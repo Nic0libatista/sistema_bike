@@ -18,7 +18,7 @@ const OSchema = new Schema({
   idCliente: {type: String},
     funcionarioos: {type:String},
     statusos: {type:String},
-    serviçosos: {type:String},
+    servicosos: {type:String},
     valoros: {type:String},
     mecanicoos: {type: String},
     pecasos: {type: String},

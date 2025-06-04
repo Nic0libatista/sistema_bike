@@ -36,7 +36,7 @@ document.getElementById('dataa').innerHTML = obterData()
 // Executar a função ao iniciar o app
 //window.onload = function() {
   //  document.getElementById('Dataa').value = obterData();
-//}; */
+//}; 
 
 
 function calcularTotal() {
@@ -49,3 +49,5 @@ function calcularTotal() {
     });
     let totalFormatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     document.getElementById('inputvalorTotal').value = totalFormatado;}
+
+    */

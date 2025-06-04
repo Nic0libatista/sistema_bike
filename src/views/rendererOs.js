@@ -40,7 +40,7 @@ input.addEventListener('input', () => {
             // Adiciona evento de clique no ítem da lista para preencher os campos do form
             item.addEventListener('click', () => {
                 idClient.value = c._id
-                nameClient.value = c.nomeCliente
+                // nameClient.value = c.nomeCliente
                // phoneClient.value = c.
                 input.value = c.nomeCliente
                 suggestionList.innerHTML = ""
@@ -163,7 +163,7 @@ frmOs.addEventListener('submit', async (event) => {
                 idClient_OS: idClient.value,
                 funcionarioos: nomeFuncionario.value,
                 statusos: osStatus.value,
-                serviçosos: servicos,
+                servicosos: servicos,
                 valoros: valorTotal.value,
                 mecanicoos: nameMecanico.value,
                 clienteos: nomeClienteOs,
@@ -180,16 +180,18 @@ frmOs.addEventListener('submit', async (event) => {
             //Gerar OS
             //Criar um objeto para armazenar os dados da OS antes de enviar ao main
             const os = {
-                funcionarioos: nomeFuncionario.value,
-                statusos: osStatus.value,
-                serviçosos: servicos,
-                valoros: valorTotal.value,
-                mecanicoos: nameMecanico.value,
-                clienteos: nomeClienteOs,
-                pecasos: pecas.value,
-                relatorioclios: relatorioCli.value,
-                relatoriotecos: relatorioTec.value,
-                modeloos: modeloCli.value
+                id_OS: idOS.value,
+                idClient_OS: idClient.value,
+                funcionarioos_OS: nomeFuncionario.value,
+                statusos_OS: osStatus.value,
+                servicosos_OS: servicos,
+                valoros_OS: valorTotal.value,
+                mecanicoos_OS: nameMecanico.value,
+                clienteos_OS: nomeClienteOs,
+                pecasos_OS: pecas.value,
+                relatorioclios_OS: relatorioCli.value,
+                relatoriotecos_OS: relatorioTec.value,
+                modeloos_OS: modeloCli.value
            
             }
             // Enviar ao main o objeto os - (Passo 2: fluxo)
@@ -235,12 +237,12 @@ input.value = os.clienteos;
 pecas.value = os.pecasos
 relatorioCli.value = os.relatorioclios
 relatorioTec.value = os.relatoriotecos
-servicos = os.serviçosos,
+servicos = os.servicosos,
 modeloCli.value =os.modeloos
 
   // Ativar checkboxes com base nos serviços retornados
 // Marcar os checkboxes dos serviços salvos na OS
-const servicosArray = os.serviçosos.split(',').map(s => s.trim().toLowerCase());
+const servicosArray = os.servicosos.split(',').map(s => s.trim().toLowerCase());
 
 document.querySelectorAll('input[type="checkbox"][id^="servico"]').forEach(checkbox => {
     const valorCheckbox = checkbox.value.trim().toLowerCase();

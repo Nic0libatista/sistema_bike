@@ -17,8 +17,11 @@ const clientBikeModel = require ('./src/models/bike.js')
 
 const OSModel = require('./src/models/os.js')
 
-const {jspdf, default: jsPDF} = require('jspdf')
-//importação da biblioteca fs (nativa js) p manipulação de arquivos (no caso, uso do pdf)
+// npm install jspdf@2.5.1 jspdf-autotable@3.5.25
+const jsPDF = require('jspdf').jsPDF
+require('jspdf-autotable') //aditivo do jsPDF
+
+// Importação da biblioteca fs (nativa do JavaScript) para manipulação de arquivos (no caso arquivos pdf)
 const fs = require('fs')
 
 const prompt = require('electron-prompt')
@@ -164,24 +167,6 @@ function osWindow() {
 }
 
 
-// Janela estoque
-let estoque
-function estoqueWindow() {
-    nativeTheme.themeSource = 'dark'
-    const main = BrowserWindow.getFocusedWindow()
-    if(main) {
-        estoque = new BrowserWindow({
-            width: 850,
-            height: 700,
-            //autoHideMenuBar: true,
-            resizable: false,
-            parent: main,
-            modal: true
-        })
-    }
-    estoque.loadFile('./src/views/estoque.html')  
-    estoque.center() // iniciar no centro da tela
-}
 
 
 
@@ -254,10 +239,6 @@ const template = [
 
           },
           {
-            label: 'estoque',
-            click: () => estoqueWindow()
-          },
-          {
             label: 'Sair',
             click: ()=> app.quit(),
             accelerator:'Alt+F4'
@@ -273,16 +254,20 @@ const template = [
 
           },
           {
-            label: 'Os - abertas'
+            label: 'Os - abertas',
+            click: () => relatorioOSAbertas()
           },
           {
-            label: 'Os - andamento'
+            label: 'Os - andamento',
+            click: () => relatorioOSPendentes()
           },
           {
-            label: 'Os - aguardando peças'
+            label: 'Os - aguardando peças',
+            click: () => relatorioOSAguardando()
           },
           {
-            label: 'Os - concluida'
+            label: 'Os - concluida',
+            click: () => relatorioOSFinalizadas()
           },
         
         ]
@@ -706,6 +691,7 @@ ipcMain.on('search-model', async (event, modelo) => {
 //************************************************************/
 
 
+
 // ============================================================
 // == Buscar cliente para vincular na OS ======================
 
@@ -796,7 +782,7 @@ ipcMain.on('new-os', async (event, OS) => {
             idCliente: OS.idClient_OS,
             funcionarioos: OS.funcionarioos,
             statusos: OS.statusos,
-            serviçosos: OS.serviçosos,
+            servicosos: OS.servicosos,
             valoros: OS.valoros,
             mecanicoos: OS.mecanicoos,
             clienteos: OS.clienteos,
@@ -927,16 +913,15 @@ ipcMain.on('update-os', async (event, os) => {
             os.id_OS,
             {
                 idCliente: os.idClient_OS,
-                nomeFuncionarioos: os.funcionarioos,
-                osStatus: os.statusos,
-                serviços: os.serviçosos,
-                valorTotal: os.valoros,
-                nomeMecanico: os.mecanicoos,
-                nomeClienteOs: os.clienteos,
-                pecas: os.pecasos,
-                relatoriocli: os.relatorioclios,
-                relatoriotec: os.relatoriotecos,
-                modeloCli: os.modeloos
+                funcionarioos: os.funcionarioos_OS,
+                statusos: os.statusos_OS,
+                servicosos: os.servicosos_OS,
+                valoros: os.valoros_OS,
+                mecanicoos: os.mecanicoos_OS,
+                clienteos: os.clienteos_OS,
+                pecasos: os.pecasos_OS,
+                relatorioclios: os.relatorioclios_OS,
+                relatoriotecos: os.relatoriotecos_OS
             },
             {
                 new: true
@@ -1019,7 +1004,7 @@ ipcMain.on('print-os', async (event) => {
                         doc.setTextColor(15, 30, 60)
                         doc.text("Serviços realizados: ", 14, 80)   
                         doc.setTextColor(50, 50, 50)                 
-                        doc.text(String(dataOS.serviçosos), 14, 90)
+                        doc.text(String(dataOS.servicosos), 14, 90)
                         doc.text(String(dataOS.valoros), 80, 90)
                         doc.setTextColor(15, 30, 60)
                         doc.text("Relatorio do cliente: ", 14, 100)
@@ -1127,6 +1112,13 @@ O cliente autoriza a realização dos serviços técnicos descritos nesta ordem,
         // Inserir o termo no PDF
         doc.text(termo, 14, 150, { maxWidth: 180 }) // x=14, y=60, largura máxima para quebrar o texto automaticamente
 
+         // --- Assinatura ---
+         doc.setFontSize(12)
+         doc.setTextColor('#000000')
+         doc.text('Assinatura do Cliente:', 10, y + 24)
+         doc.line(58, y + 25, 125, y + 25)
+ 
+
         // Definir o caminho do arquivo temporário e nome do arquivo
         const tempDir = app.getPath('temp')
         const filePath = path.join(tempDir, 'os.pdf')
@@ -1141,4 +1133,252 @@ O cliente autoriza a realização dos serviços técnicos descritos nesta ordem,
 }
 
 // Fim - Impressão de OS ======================================
+// ============================================================
+
+
+
+// ============================================================
+// == Relatório de OS Abertas ===============================
+
+async function relatorioOSAbertas() {
+    try {
+        const osAbertas = await OSModel.find({ statusOS: { $ne: "Aberta" } }).sort({ dataEntrada: 1 })
+
+        const doc = new jsPDF('l', 'mm', 'a4')
+        const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
+        const imageBase64 = fs.readFileSync(imagePath, { encoding: 'base64' })
+        doc.addImage(imageBase64, 'PNG', 5, 8)
+        doc.setFontSize(16)
+        doc.text("Ordens de serviço abertas", 80, 45)
+        const dataAtual = new Date().toLocaleDateString('pt-BR')
+        doc.setFontSize(12)
+        doc.text(`Data: ${dataAtual}`, 250, 15)
+
+        // Cabeçalhos da tabela
+        const headers = [["Número da OS", "Entrada", "Cliente","Modelo", "Mecanico", "Serviço", "Peças", "status"]]
+
+        const data = []
+
+        for (const os of osAbertas) {
+
+            data.push([
+                os._id.toString(),
+                new Date(os.dataEntrada).toLocaleDateString('pt-BR'),
+                os.clienteos,
+                os.modeloos,
+                os.mecanicoos,
+                os.servicosos,
+                os.pecasos || "N/A",
+                os.statusos,
+                os.valoros
+            ])
+        }
+
+        doc.autoTable({
+            head: headers,
+            body: data,
+            startY: 55,
+            styles: { fontSize: 10 },
+            headStyles: { fillColor: [0, 120, 215] },
+        })
+
+        const tempDir = app.getPath('temp')
+        const filePath = path.join(tempDir, 'os-abertas.pdf')
+        doc.save(filePath)
+        shell.openPath(filePath)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// == Fim - relatório de OS abertas =========================
+// ============================================================
+
+
+
+// ============================================================
+// == Relatório de OS pendentes ===============================
+
+async function relatorioOSPendentes() {
+    try {
+        const osPendentes = await OSModel.find({ statusOS: { $ne: "Em andamento" } }).sort({ dataEntrada: 1 })
+
+        const doc = new jsPDF('l', 'mm', 'a4')
+        const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
+        const imageBase64 = fs.readFileSync(imagePath, { encoding: 'base64' })
+        doc.addImage(imageBase64, 'PNG', 5, 8)
+        doc.setFontSize(16)
+        doc.text("Ordens de serviço pendentes", 80, 45)
+        const dataAtual = new Date().toLocaleDateString('pt-BR')
+        doc.setFontSize(12)
+        doc.text(`Data: ${dataAtual}`, 250, 15)
+
+        // Cabeçalhos da tabela
+        const headers = [["Número da OS", "Entrada", "Cliente", "Modelo", "Mecanico", "Serviço", "Peças", "Valor"]]
+
+        const data = []
+
+        for (const os of osPendentes) {
+
+            data.push([
+                os._id.toString(),
+                new Date(os.dataEntrada).toLocaleDateString('pt-BR'),
+                os.clienteos,
+                os.modeloos,
+                os.mecanicoos,
+                os.servicosos,
+                os.pecasos || "N/A",
+                os.valoros
+            ])
+        }
+
+        doc.autoTable({
+            head: headers,
+            body: data,
+            startY: 55,
+            styles: { fontSize: 10 },
+            headStyles: { fillColor: [0, 120, 215] },
+        })
+
+        const tempDir = app.getPath('temp')
+        const filePath = path.join(tempDir, 'os-pendentes.pdf')
+        doc.save(filePath)
+        shell.openPath(filePath)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// == Fim - relatório de OS pendentes =========================
+// ============================================================
+
+
+
+// ============================================================
+// == Relatório de OS finalizadas =============================
+
+async function relatorioOSFinalizadas() {
+    try {
+        const osFinalizadas = await OSModel.find({ statusos: "Finalizada" }).sort({ dataEntrada: 1 })
+
+        const doc = new jsPDF('l', 'mm', 'a4')
+        const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
+        const imageBase64 = fs.readFileSync(imagePath, { encoding: 'base64' })
+        doc.addImage(imageBase64, 'PNG', 5, 8)
+        doc.setFontSize(16)
+
+        doc.text("Ordens de serviço finalizadas", 80, 45)
+
+        const dataAtual = new Date().toLocaleDateString('pt-BR')
+        doc.setFontSize(12)
+        doc.text(`Data: ${dataAtual}`, 250, 15)
+
+        const headers = [[
+            "Número da OS", "Entrada", "Cliente", "Modelo",
+            "Mecanico", "Serviço", "Peças", "Valor (R$)"
+        ]]
+
+        const data = []
+        let totalGeral = 0
+
+        for (const os of osFinalizadas) {
+            
+
+            const valorOS = parseFloat(os.valoros) || 0
+            totalGeral += valorOS
+
+            data.push([
+                os._id.toString(),
+                new Date(os.dataEntrada).toLocaleDateString('pt-BR'),
+                os.clienteos,
+                os.modeloos,
+                os.mecanicoos,
+                os.servicosos,
+                os.pecasos || "N/A",
+                os.valoros
+            ])
+        }
+
+        // Exibir total geral antes da tabela
+        doc.setFontSize(12)
+        doc.setTextColor(0, 100, 0) // verde escuro
+        doc.text(`Total geral: R$ ${totalGeral.toFixed(2)}`, 235, 50)
+        doc.setTextColor(0, 0, 0) // resetar para preto
+
+        doc.autoTable({
+            head: headers,
+            body: data,
+            startY: 55,
+            styles: { fontSize: 10 },
+            headStyles: { fillColor: [0, 120, 215] },
+        })
+
+        const tempDir = app.getPath('temp')
+        const filePath = path.join(tempDir, 'os-finalizadas.pdf')
+        doc.save(filePath)
+        shell.openPath(filePath)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+// == Fim - relatório de OS finalizada ========================
+// ============================================================
+
+
+// ============================================================
+// == Relatório de OS Aguardando ===============================
+
+async function relatorioOSAguardando() {
+    try {
+        const osAguardando = await OSModel.find({ statusOS: { $ne: "Aguardando peças" } }).sort({ dataEntrada: 1 })
+
+        const doc = new jsPDF('l', 'mm', 'a4')
+        const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
+        const imageBase64 = fs.readFileSync(imagePath, { encoding: 'base64' })
+        doc.addImage(imageBase64, 'PNG', 5, 8)
+        doc.setFontSize(16)
+        doc.text("Ordens de serviço Aguardando peças", 80, 45)
+        const dataAtual = new Date().toLocaleDateString('pt-BR')
+        doc.setFontSize(12)
+        doc.text(`Data: ${dataAtual}`, 250, 15)
+
+        // Cabeçalhos da tabela
+        const headers = [["Número da OS", "Entrada", "Cliente","Modelo", "Mecanico", "Serviço", "Peças"]]
+
+        const data = []
+
+        for (const os of osAguardando) {
+
+            data.push([
+                os._id.toString(),
+                new Date(os.dataEntrada).toLocaleDateString('pt-BR'),
+                os.clienteos,
+                os.modeloos,
+                os.mecanicoos,
+                os.servicosos,
+                os.pecasos || "N/A",
+                os.valoros
+            ])
+        }
+
+        doc.autoTable({
+            head: headers,
+            body: data,
+            startY: 55,
+            styles: { fontSize: 10 },
+            headStyles: { fillColor: [0, 120, 215] },
+        })
+
+        const tempDir = app.getPath('temp')
+        const filePath = path.join(tempDir, 'os-aguardando-pecas.pdf')
+        doc.save(filePath)
+        shell.openPath(filePath)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// == Fim - relatório de OS pendentes =========================
 // ============================================================

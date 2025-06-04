@@ -2,11 +2,12 @@
 
 //capturar o foco na busca pelo nome do cliente
 // a constante foco obtem o elemento html (input) identificada como searchClient
-const foco = document.getElementById('searchClient')
+//const foco = document.getElementById('searchClient')
 
 
 
 // Capturar os dados dos inputs
+const input = document.getElementById('searchClient')
 let frmClientbike = document.getElementById('frmClientbike');
 let nameClient = document.getElementById('inputNameClient');
 let cpfClient = document.getElementById('inputCPFClient');
