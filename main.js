@@ -1113,10 +1113,10 @@ O cliente autoriza a realização dos serviços técnicos descritos nesta ordem,
         doc.text(termo, 14, 150, { maxWidth: 180 }) // x=14, y=60, largura máxima para quebrar o texto automaticamente
 
          // --- Assinatura ---
-         doc.setFontSize(12)
-         doc.setTextColor('#000000')
-         doc.text('Assinatura do Cliente:', 10, y + 24)
-         doc.line(58, y + 25, 125, y + 25)
+        // doc.setFontSize(12)
+        // doc.setTextColor('#000000')
+       //  doc.text('Assinatura do Cliente:', 300, y + 24)
+        // doc.line(58, y + 25, 125, y + 25)
  
 
         // Definir o caminho do arquivo temporário e nome do arquivo
